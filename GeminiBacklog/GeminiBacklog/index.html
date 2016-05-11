@@ -17,7 +17,7 @@
                     $.get('/GeminiBacklog/loggedtimes/' + userId, function (data) {
                         var source = $('#history-template').html(),
                         template = Handlebars.compile(source);
-                        $('#workdone').html(template(data));
+                        $('#history').html(template(data));
                     })
                 }
 
@@ -34,7 +34,18 @@
                 });
             }
 
+            function bindAvailableDates() {
+                $.get('/GeminiBacklog/permissibledates', function (dates) {
+                    $(dates).each(function (i, o) {
+                        console.log(JSON.stringify(o));
+
+                        $('#availableDates').append($('<option/>', { text: o.dateText, value: o.dateValue }));
+                    })
+                });
+            }
+
             getPriortisedBacklog();
+            bindAvailableDates();
             $('#tabs').tabs({ activate: onTabChanged });
         });
     </script>
@@ -49,7 +60,10 @@
         </ul>
         <div id="backlog"></div>
         <div id="workdone">
-            tbd...
+            <div>
+                <select id="availableDates"></select>
+            </div>
+            <div id="history" />
         </div>
     </div>
     <script id="issues-template" type="text/x-handlebars-template">
