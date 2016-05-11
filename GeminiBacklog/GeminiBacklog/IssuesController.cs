@@ -21,6 +21,7 @@ namespace GeminiBacklog
             }
         }
 
+        [Route("issues")]
         public dynamic Get()
         {
             dynamic results = null;
