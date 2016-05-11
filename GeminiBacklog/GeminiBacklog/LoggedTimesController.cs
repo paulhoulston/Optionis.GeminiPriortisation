@@ -34,7 +34,7 @@ namespace GeminiBacklog
                 {
                     UserId = userId,
                     StartDate = firstDayOfWeek,
-                    History = sqlConnection.Query<HistoryModel>(_sql, new { UserId = 81, StartDate = firstDayOfWeek })
+                    History = sqlConnection.Query<HistoryModel>(_sql, new { UserId = userId, StartDate = firstDayOfWeek })
                 };
                 sqlConnection.Close();
             }
@@ -49,14 +49,13 @@ namespace GeminiBacklog
 
         public class HistoryModel
         {
-            public string UserName { get; set; }
             public string Issue { get; set; }
             public string GeminiRef { get; set; }
-            public string Monday { get; set; }
-            public string Tuesday { get; set; }
-            public string Wednesday { get; set; }
-            public string Thursday { get; set; }
-            public string Friday { get; set; }
+            public int Monday { get; set; }
+            public int Tuesday { get; set; }
+            public int Wednesday { get; set; }
+            public int Thursday { get; set; }
+            public int Friday { get; set; }
         }
     }
 }

@@ -10,13 +10,14 @@
     <link href="Content/themes/base/all.css" rel="stylesheet" />
     <script type="text/javascript">
         $(function () {
-
             function onTabChanged(_, ui) {
                 var userId;
 
                 function getWorkHistoryForUser() {
                     $.get('/GeminiBacklog/loggedtimes/' + userId, function (data) {
-                        $('#workdone').empty().html(JSON.stringify(data));
+                        var source = $('#history-template').html(),
+                        template = Handlebars.compile(source);
+                        $('#workdone').html(template(data));
                     })
                 }
 
@@ -72,6 +73,28 @@
             <div class="column grid_1">{{priority}}</div>
         </div>
         {{/issues}}
+    </script>
+    <script id="history-template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="column grid_1 strong">ID</div>
+            <div class="column grid_6 strong">Issue</div>
+            <div class="column grid_1 strong">Monday</div>
+            <div class="column grid_1 strong">Tuesday</div>
+            <div class="column grid_1 strong">Wednesday</div>
+            <div class="column grid_1 strong">Thursday</div>
+            <div class="column grid_1 strong">Friday</div>
+        </div>
+        {{#history}}
+        <div class="row">
+            <div class="column grid_1">{{geminiRef}}</div>
+            <div class="column grid_6">{{issue}}</div>
+            <div class="column grid_1">{{monday}}</div>
+            <div class="column grid_1">{{tuesday}}</div>
+            <div class="column grid_1">{{wednesday}}</div>
+            <div class="column grid_1">{{thursday}}</div>
+            <div class="column grid_1">{{friday}}</div>
+        </div>
+        {{/history}}
     </script>
 </body>
 </html>
