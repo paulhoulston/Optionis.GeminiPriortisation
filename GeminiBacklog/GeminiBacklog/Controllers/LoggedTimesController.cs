@@ -23,31 +23,24 @@ namespace GeminiBacklog.Controllers
             }
         }
 
-        [Route("loggedtimes/{userId}")]
-        public dynamic Get(int userId)
+        [Route("loggedtimes/{userId}/{startDate}")]
+        public dynamic Get(int userId, DateTime startDate)
         {
             dynamic results = null;
-            var firstDayOfWeek = FirstDayOfWeek();
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
                 results = new
                 {
                     UserId = userId,
-                    StartDate = firstDayOfWeek,
-                    History = sqlConnection.Query<HistoryModel>(_sql, new { UserId = userId, StartDate = firstDayOfWeek })
+                    StartDate = startDate,
+                    History = sqlConnection.Query<HistoryModel>(_sql, new { UserId = userId, StartDate = startDate })
                 };
                 sqlConnection.Close();
             }
             return results;
         }
-        
-        DateTime FirstDayOfWeek()
-        {
-            var today = DateTime.Today;
-            return DateTime.Today.AddDays(1 - (int)today.DayOfWeek);
-        }
-
+     
         public class HistoryModel
         {
             public string Issue { get; set; }
