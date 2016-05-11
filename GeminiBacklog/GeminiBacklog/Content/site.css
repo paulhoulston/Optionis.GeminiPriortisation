@@ -18,3 +18,10 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .noMinWidth { min-width: 0; }
 
 .bordered { border-top: 1px solid #0a0a0a; padding: 4px 0}
+.row.sum {
+    padding: 10px 0;
+    background-color: #f0f0f0
+}
+.alignRight {
+    text-align: right;
+}
