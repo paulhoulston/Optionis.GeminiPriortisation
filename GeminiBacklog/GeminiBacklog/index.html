@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.min.js"></script>
+    <script src="Scripts/handlebars.min.js"></script>
+    <link href="Content/site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $.get('/GeminiBacklog/issues', function (issues) {
+
+                var source = $('#issues-template').html(),
+                    template = Handlebars.compile(source);
+                $('body').html(template(issues));
+            })
+        });
+    </script>
+</head>
+<body>
+    <script id="issues-template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="column grid_1 strong">Issue</div>
+            <div class="column grid_6 strong">Summary</div>
+            <div class="column grid_1 strong">Status</div>
+            <div class="column grid_1 strong">Type</div>
+            <div class="column grid_1 strong">DueDate</div>
+            <div class="column grid_1 strong">Created</div>
+            <div class="column grid_1 strong">Priority</div>
+        </div> 
+        {{#issues}}
+        <div class="row bordered">
+            <div class="column grid_1">{{issue}}</div>
+            <div class="column grid_3">{{summary}}</div>
+            <div class="column grid_2">{{status}}</div>
+            <div class="column grid_2">{{type}}</div>
+            <div class="column grid_1">{{#if dueDate}} {{dueDate}} {{else}}&nbsp;{{/if}}</div>
+            <div class="column grid_1">{{created}}</div>
+            <div class="column grid_1">{{priority}}</div>
+        </div>
+        {{/issues}}
+    </script>
+</body>
+</html>
