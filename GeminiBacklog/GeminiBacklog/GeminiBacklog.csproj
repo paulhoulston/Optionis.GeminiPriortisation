@@ -118,6 +118,7 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <EmbeddedResource Include="Queries\Prioritisation.sql" />
+    <EmbeddedResource Include="Queries\WorkHistory.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
