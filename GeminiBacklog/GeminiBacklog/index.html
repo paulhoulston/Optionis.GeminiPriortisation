@@ -2,22 +2,55 @@
 <html>
 <head>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
     <script src="Scripts/jquery-2.2.3.min.js"></script>
     <script src="Scripts/handlebars.min.js"></script>
+    <script src="Scripts/jquery-ui-1.11.4.min.js"></script>
     <link href="Content/site.css" rel="stylesheet" />
+    <link href="Content/themes/base/all.css" rel="stylesheet" />
     <script type="text/javascript">
         $(function () {
-            $.get('/GeminiBacklog/issues', function (issues) {
 
-                var source = $('#issues-template').html(),
-                    template = Handlebars.compile(source);
-                $('body').html(template(issues));
-            })
+            function onTabChanged(_, ui) {
+                var userId;
+
+                function getWorkHistoryForUser() {
+                    $.get('/GeminiBacklog/loggedtimes/' + userId, function (data) {
+                        $('#workdone').empty().html(JSON.stringify(data));
+                    })
+                }
+
+                userId = $(ui.newTab).attr('data-gemini-user-id');
+                if (userId)
+                    getWorkHistoryForUser();
+            }
+
+            function getPriortisedBacklog() {
+                $.get('/GeminiBacklog/issues', function (issues) {
+                    var source = $('#issues-template').html(),
+                        template = Handlebars.compile(source);
+                    $('#backlog').html(template(issues));
+                });
+            }
+
+            getPriortisedBacklog();
+            $('#tabs').tabs({ activate: onTabChanged });
         });
     </script>
 </head>
 <body>
+    <div id="tabs">
+        <ul>
+            <li><a href="#backlog">Priorities</a></li>
+            <li data-gemini-user-id="81"><a href="#workdone">Paul Houlston</a></li>
+            <li data-gemini-user-id="33"><a href="#workdone">Ross Cooper</a></li>
+            <li data-gemini-user-id="54"><a href="#workdone">Simon Aspinall</a></li>
+        </ul>
+        <div id="backlog"></div>
+        <div id="workdone">
+            tbd...
+        </div>
+    </div>
     <script id="issues-template" type="text/x-handlebars-template">
         <div class="row">
             <div class="column grid_1 strong">Issue</div>
@@ -27,7 +60,7 @@
             <div class="column grid_1 strong">DueDate</div>
             <div class="column grid_1 strong">Created</div>
             <div class="column grid_1 strong">Priority</div>
-        </div> 
+        </div>
         {{#issues}}
         <div class="row bordered">
             <div class="column grid_1">{{issue}}</div>
