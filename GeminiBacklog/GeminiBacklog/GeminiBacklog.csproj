@@ -14,7 +14,7 @@
     <RootNamespace>GeminiBacklog</RootNamespace>
     <AssemblyName>GeminiBacklog</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -127,6 +127,7 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <None Include="Properties\PublishProfiles\Intranet - TTeamTimeLogging.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -171,7 +172,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58227</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/GeminiBacklog</IISUrl>
+          <IISUrl>http://localhost:58227/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

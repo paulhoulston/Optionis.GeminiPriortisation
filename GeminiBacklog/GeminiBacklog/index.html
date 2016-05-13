@@ -19,7 +19,7 @@
                 }
 
                 function getPriortisedBacklog() {
-                    $.get('/GeminiBacklog/issues', function (issues) {
+                    $.get('/ITTeamTimeLogging/issues', function (issues) {
                         bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
                     });
                 }
@@ -29,7 +29,7 @@
                         userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id');
 
                     if (userId)
-                        $.get('/GeminiBacklog/loggedtimes/' + userId + '/' + $('#availableDates').val(), function (data) {
+                        $.get('/ITTeamTimeLogging/loggedtimes/' + userId + '/' + $('#availableDates').val(), function (data) {
                             var source = $('#history-template').html(),
                             template = Handlebars.compile(source);
                             $('#history').html(template(data));
@@ -37,7 +37,7 @@
                 }
 
                 function bindAvailableDates() {
-                    $.get('/GeminiBacklog/permissibledates', function (dates) {
+                    $.get('/ITTeamTimeLogging/permissibledates', function (dates) {
                         bindToTemplate({
                             data: dates,
                             templateSelector: '#availabledates-template', destinationSelector: '#dates'
@@ -55,7 +55,7 @@
                     bindAvailableDates();
                 }
 
-                $.getJSON('/GeminiBacklog/people', createTabs);
+                $.getJSON('/ITTeamTimeLogging/people', createTabs);
             }
         };
 
@@ -66,10 +66,10 @@
     <div id="tabs"></div>
     <script id="tabs-template" type="text/x-handlebars-template">
         <ul>
-            <li><a href="#backlog">Dev Priorities</a></li>
             {{#people}}
             <li data-gemini-user-id="{{geminiId}}"><a href="#workdone">{{name}}</a></li>
             {{/people}}
+            <li><a href="#backlog">Dev Priorities</a></li>
         </ul>
         <div id="backlog"></div>
         <div id="workdone">
