@@ -9,12 +9,12 @@ namespace GeminiBacklog.Controllers
         public dynamic Get()
         {
             var theDate = FirstDayOfWeek();
-            var dates = new DateField[25];
+            var availableDates = new DateField[25];
             for (var i = 0; i < 25; i++)
             {
-                dates[i] = new DateField(theDate.AddDays(-7 * i));
+                availableDates[i] = new DateField(theDate.AddDays(-7 * i));
             }
-            return dates;
+            return new { availableDates };
         }
 
         DateTime FirstDayOfWeek()

@@ -9,59 +9,82 @@
     <link href="Content/site.css" rel="stylesheet" />
     <link href="Content/themes/base/all.css" rel="stylesheet" />
     <script type="text/javascript">
-        $(function () {
 
-            function getWorkHistoryForUser() {
-                var tabIndex = $('#tabs').tabs('option', 'active'),
-                    userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id');
+        Dashboard = {
+            init: function () {
+                function bindToTemplate(opts) {
+                    var source = $(opts.templateSelector).html(),
+                            template = Handlebars.compile(source);
+                    return $(opts.destinationSelector).html(template(opts.data));
+                }
 
-                if (userId)
-                    $.get('/GeminiBacklog/loggedtimes/' + userId + '/' + $('#availableDates').val(), function (data) {
-                        var source = $('#history-template').html(),
-                        template = Handlebars.compile(source);
-                        $('#history').html(template(data));
+                function getPriortisedBacklog() {
+                    $.get('/GeminiBacklog/issues', function (issues) {
+                        bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
                     });
-            }
+                }
 
-            function getPriortisedBacklog() {
-                $.get('/GeminiBacklog/issues', function (issues) {
-                    var source = $('#issues-template').html(),
-                        template = Handlebars.compile(source);
-                    $('#backlog').html(template(issues));
-                });
-            }
+                function getWorkHistoryForUser() {
+                    var tabIndex = $('#tabs').tabs('option', 'active'),
+                        userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id');
 
-            function bindAvailableDates() {
-                var datesList = $('#availableDates').on('change', getWorkHistoryForUser);
-                $.get('/GeminiBacklog/permissibledates', function (dates) {
-                    $(dates).each(function (i, o) {
-                        datesList.append($('<option/>', { text: o.dateText, value: o.dateValue }));
-                    })
-                });
-            }
+                    if (userId)
+                        $.get('/GeminiBacklog/loggedtimes/' + userId + '/' + $('#availableDates').val(), function (data) {
+                            var source = $('#history-template').html(),
+                            template = Handlebars.compile(source);
+                            $('#history').html(template(data));
+                        });
+                }
 
-            getPriortisedBacklog();
-            bindAvailableDates();
-            $('#tabs').tabs({ activate: getWorkHistoryForUser });
-        });
+                function bindAvailableDates() {
+                    $.get('/GeminiBacklog/permissibledates', function (dates) {
+                        bindToTemplate({
+                            data: dates,
+                            templateSelector: '#availabledates-template', destinationSelector: '#dates'
+                        }).on('change', getWorkHistoryForUser);
+                    });
+                }
+
+                function createTabs(people) {
+                    bindToTemplate({
+                        templateSelector: '#tabs-template',
+                        data: people, destinationSelector: '#tabs'
+                    }).tabs({ activate: getWorkHistoryForUser });
+
+                    getPriortisedBacklog();
+                    bindAvailableDates();
+                }
+
+                $.getJSON('/GeminiBacklog/people', createTabs);
+            }
+        };
+
+        $(Dashboard.init);
     </script>
 </head>
 <body>
-    <div id="tabs">
+    <div id="tabs"></div>
+    <script id="tabs-template" type="text/x-handlebars-template">
         <ul>
-            <li><a href="#backlog">Priorities</a></li>
-            <li data-gemini-user-id="81"><a href="#workdone">Paul Houlston</a></li>
-            <li data-gemini-user-id="33"><a href="#workdone">Ross Cooper</a></li>
-            <li data-gemini-user-id="54"><a href="#workdone">Simon Aspinall</a></li>
+            <li><a href="#backlog">Dev Priorities</a></li>
+            {{#people}}
+            <li data-gemini-user-id="{{geminiId}}"><a href="#workdone">{{name}}</a></li>
+            {{/people}}
         </ul>
         <div id="backlog"></div>
         <div id="workdone">
-            <div>
-                <select id="availableDates"></select>
+            <div id="dates">
             </div>
             <div id="history" />
         </div>
-    </div>
+    </script>
+    <script id="availabledates-template" type="text/x-handlebars">
+        <select id="availableDates">
+            {{#availableDates}}
+            <option value="{{dateValue}}">{{dateText}}</option>
+            {{/availableDates}}
+        </select>
+    </script>
     <script id="issues-template" type="text/x-handlebars-template">
         <div class="row">
             <div class="column grid_1 strong">Issue</div>
