@@ -12,6 +12,16 @@
 
         Dashboard = {
             init: function () {
+
+                var baseUri = window.location.origin;
+
+                function formatString(str, args) {
+                    args = typeof args === 'object' ? args : Array.prototype.slice.call(arguments, 1);
+                    return str.replace(/\{([^}]+)\}/gm, function () {
+                        return args[arguments[1]];
+                    });
+                }
+
                 function bindToTemplate(opts) {
                     var source = $(opts.templateSelector).html(),
                             template = Handlebars.compile(source);
@@ -19,17 +29,19 @@
                 }
 
                 function getPriortisedBacklog() {
-                    $.get('/ITTeamTimeLogging/issues', function (issues) {
+                    $.get(formatString('{0}/issues', baseUri), function (issues) {
                         bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
                     });
                 }
 
                 function getWorkHistoryForUser() {
                     var tabIndex = $('#tabs').tabs('option', 'active'),
-                        userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id');
+                        userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
+                        selectedDate = $('#availableDates').val(),
+                        url = formatString('{0}/loggedtimes/{1}/{2}', baseUri, userId, selectedDate);
 
                     if (userId)
-                        $.get('/ITTeamTimeLogging/loggedtimes/' + userId + '/' + $('#availableDates').val(), function (data) {
+                        $.get(url, function (data) {
                             var source = $('#history-template').html(),
                             template = Handlebars.compile(source);
                             $('#history').html(template(data));
@@ -37,7 +49,7 @@
                 }
 
                 function bindAvailableDates() {
-                    $.get('/ITTeamTimeLogging/permissibledates', function (dates) {
+                    $.get(formatString('{0}/permissibledates', baseUri), function (dates) {
                         bindToTemplate({
                             data: dates,
                             templateSelector: '#availabledates-template', destinationSelector: '#dates'
@@ -55,7 +67,7 @@
                     bindAvailableDates();
                 }
 
-                $.getJSON('/ITTeamTimeLogging/people', createTabs);
+                $.getJSON(formatString('{0}/people', baseUri), createTabs);
             }
         };
 
