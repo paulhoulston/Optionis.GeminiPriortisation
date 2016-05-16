@@ -117,7 +117,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
-    <EmbeddedResource Include="Queries\Prioritisation.sql" />
+    <EmbeddedResource Include="Queries\DevPriorities.sql" />
     <EmbeddedResource Include="Queries\WorkHistory.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
@@ -141,7 +141,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\IssuesController.cs" />
+    <Compile Include="Controllers\PrioritiesController.cs" />
     <Compile Include="Controllers\LoggedTimesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

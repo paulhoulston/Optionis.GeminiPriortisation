@@ -29,7 +29,7 @@
                 }
 
                 function getPriortisedBacklog() {
-                    $.get(formatString('{0}/issues', sitePath), function (issues) {
+                    $.get(formatString('{0}/priorities', sitePath), function (issues) {
                         bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
                     });
                 }

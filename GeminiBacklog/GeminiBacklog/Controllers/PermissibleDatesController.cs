@@ -5,7 +5,6 @@ namespace GeminiBacklog.Controllers
 {
     public class PermissibleDatesController : ApiController
     {
-        [Route("permissibledates")]
         public dynamic Get()
         {
             var theDate = FirstDayOfWeek();

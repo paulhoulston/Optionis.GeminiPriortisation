@@ -7,21 +7,20 @@ using Dapper;
 
 namespace GeminiBacklog.Controllers
 {
-    public class IssuesController : ApiController
+    public class PrioritiesController : ApiController
     {
         static readonly string _connectionString = ConfigurationManager.ConnectionStrings["Gemini"].ConnectionString;
         static readonly string _sql;
 
-        static IssuesController()
+        static PrioritiesController()
         {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.Prioritisation.sql"))
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.DevPriorities.sql"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 _sql = reader.ReadToEnd();
             }
         }
 
-        [Route("issues")]
         public dynamic Get()
         {
             dynamic results = null;
