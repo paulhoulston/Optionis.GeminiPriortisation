@@ -40,12 +40,23 @@
                         selectedDate = $('#availableDates').val(),
                         url = formatString('{0}/loggedtimes/{1}/{2}', sitePath, userId, selectedDate);
 
-                    if (userId)
+                    if (userId) {
                         $.get(url, function (data) {
-                            var source = $('#history-template').html(),
-                            template = Handlebars.compile(source);
-                            $('#history').html(template(data));
+                            bindToTemplate({
+                                data: data,
+                                templateSelector: '#history-template',
+                                destinationSelector: '#history'
+                            });
+
+                            $.get(formatString('{0}/issues/{1}', sitePath, userId), function (data) {
+                                bindToTemplate({
+                                    data: data,
+                                    templateSelector: '#issues-template',
+                                    destinationSelector: '#assignedTasks div'
+                                });
+                            });
                         });
+                    }
                 }
 
                 function bindAvailableDates() {
@@ -86,16 +97,20 @@
     <div id="tabs"></div>
     <script id="tabs-template" type="text/x-handlebars-template">
         <ul>
+            <li><a href="#backlog">Dev Priorities</a></li>
             {{#people}}
             <li data-gemini-user-id="{{geminiId}}"><a href="#workdone">{{name}}</a></li>
             {{/people}}
-            <li><a href="#backlog">Dev Priorities</a></li>
         </ul>
         <div id="backlog"></div>
         <div id="workdone">
             <div id="dates">
             </div>
             <div id="history" />
+            <div id="assignedTasks" class="row">
+                <h4>Assigned Tasks</h4>
+                <div></div>
+            </div>
         </div>
     </script>
     <script id="availabledates-template" type="text/x-handlebars">
