@@ -13,7 +13,7 @@
         Dashboard = {
             init: function () {
 
-                var baseUri = window.location.origin;
+                var sitePath;
 
                 function formatString(str, args) {
                     args = typeof args === 'object' ? args : Array.prototype.slice.call(arguments, 1);
@@ -29,7 +29,7 @@
                 }
 
                 function getPriortisedBacklog() {
-                    $.get(formatString('{0}/issues', baseUri), function (issues) {
+                    $.get(formatString('{0}/issues', sitePath), function (issues) {
                         bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
                     });
                 }
@@ -38,7 +38,7 @@
                     var tabIndex = $('#tabs').tabs('option', 'active'),
                         userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
                         selectedDate = $('#availableDates').val(),
-                        url = formatString('{0}/loggedtimes/{1}/{2}', baseUri, userId, selectedDate);
+                        url = formatString('{0}/loggedtimes/{1}/{2}', sitePath, userId, selectedDate);
 
                     if (userId)
                         $.get(url, function (data) {
@@ -49,7 +49,7 @@
                 }
 
                 function bindAvailableDates() {
-                    $.get(formatString('{0}/permissibledates', baseUri), function (dates) {
+                    $.get(formatString('{0}/permissibledates', sitePath), function (dates) {
                         bindToTemplate({
                             data: dates,
                             templateSelector: '#availabledates-template', destinationSelector: '#dates'
@@ -67,7 +67,15 @@
                     bindAvailableDates();
                 }
 
-                $.getJSON(formatString('{0}/people', baseUri), createTabs);
+                function getPath() {
+                    var index = window.location.pathname.lastIndexOf('/');
+                    return index >= 0 ?
+                        window.location.pathname.substring(0, index) :
+                        window.location.pathname;
+                }
+
+                sitePath = getPath();
+                $.getJSON(formatString('{0}/people', sitePath), createTabs);
             }
         };
 
