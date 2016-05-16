@@ -1,6 +1,7 @@
 ﻿* { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; color: #0a0a0a; font-size: 1.0em }
 .strong { font-weight: bold }
+.italic { font-style: italic }
 .grid_1 { width:6.25%; }
 .grid_2 { width:14.583%; }
 .grid_3 { width:22.917%; }
@@ -16,15 +17,13 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .column { margin: 0 1.04%; overflow: hidden; float: left; }
 .row { min-width: 960px; width: 97.875%; margin: 0 1.064%; overflow: hidden; }
 .noMinWidth { min-width: 0; }
+.row.lines { border-top: 1px solid #0a0a0a; padding: 4px 0}
 
-.bordered { border-top: 1px solid #0a0a0a; padding: 4px 0}
-.row.sum {
-    padding: 10px 0;
-    background-color: #f0f0f0
-}
 .alignRight {
     text-align: right;
 }
 
-h4 { margin: 10px }
-#assignedTasks { margin-top: 15px; background-color: #f0f0f0 }
+h2 { font-size: 1.1em }
+h4 { font-size: 1.0em; margin: 10px }
+#assignedTasks { background-color: #f0f0f0; margin-bottom: 25px; padding-bottom: 10px }
+.day { padding: 10px; border: 1px solid #a0a0a0; margin-top: 7px }

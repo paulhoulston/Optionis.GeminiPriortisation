@@ -29,49 +29,61 @@ namespace GeminiBacklog.Controllers
         {
             var historyItems = HistoryItems(userId, startDate);
             return new
-                {
-                    UserId = userId,
-                    StartDate = startDate,
-                    History = historyItems,
-                    Total = new
-                    {
-                        Monday = historyItems.Sum(items => items.Monday),
-                        Tuesday = historyItems.Sum(items => items.Tuesday),
-                        Wednesday = historyItems.Sum(items => items.Wednesday),
-                        Thursday = historyItems.Sum(items => items.Thursday),
-                        Friday = historyItems.Sum(items => items.Friday)
-                    }
-                };
-            }
+            {
+                userId,
+                startDate,
+                dates = Enumerable.Range(0, 5).Select(i => startDate.AddDays(i)).Select(date => DetailsForDate(date, historyItems.Where(item => item.WorkDate == date)))
+            };
+        }
 
-        IEnumerable<HistoryModel> HistoryItems(int userId, DateTime startDate)
+        static dynamic DetailsForDate(DateTime date, IEnumerable<HistoryModel> timeTrackingItemsForDate)
+        {
+            return new
+            {
+                date,
+                dayOfWeek = date.DayOfWeek.ToString(),
+                total = new Total(timeTrackingItemsForDate.Sum(item => item.WorkTimeInMinutes)),
+                issues = timeTrackingItemsForDate.Select(item => new { item.Issue, item.GeminiRef }).Distinct().Select(item => new
+                {
+                    item.GeminiRef,
+                    item.Issue,
+                    total = new Total(timeTrackingItemsForDate.Where(row => row.GeminiRef.Equals(item.GeminiRef)).Sum(row => row.WorkTimeInMinutes)),
+                    tasks = timeTrackingItemsForDate.Where(row => row.GeminiRef.Equals(item.GeminiRef)).Select(row => new { row.Comments, total = new Total(row.WorkTimeInMinutes) })
+                })
+            };
+        }
+
+        static IEnumerable<HistoryModel> HistoryItems(int userId, DateTime startDate)
         {
             IEnumerable<HistoryModel> results = null;
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
-                results =
-                    sqlConnection
-                        .Query<HistoryModel>(_sql, new { UserId = userId, StartDate = startDate })
-                        .OrderByDescending(items => items.Monday)
-                        .ThenByDescending(items => items.Tuesday)
-                        .ThenByDescending(items => items.Wednesday)
-                        .ThenByDescending(items => items.Thursday)
-                        .ThenByDescending(items => items.Friday);
+                results = sqlConnection.Query<HistoryModel>(_sql, new { UserId = userId, StartDate = startDate });
                 sqlConnection.Close();
             }
             return results;
-    }
-    
-        public class HistoryModel
+        }
+
+        class Total
         {
-            public string Issue { get; set; }
+            public Total(int time)
+            {
+                Hours = time / 60;
+                Minutes = time - (60 * Hours);
+            }
+
+            public int Hours { get; set; }
+            public int Minutes { get; set; }
+        }
+
+    public class HistoryModel
+        {
+            public DateTime WorkDate { get; set; }
             public string GeminiRef { get; set; }
-            public int Monday { get; set; }
-            public int Tuesday { get; set; }
-            public int Wednesday { get; set; }
-            public int Thursday { get; set; }
-            public int Friday { get; set; }
+            public string Issue { get; set; }
+            public int WorkTimeInMinutes { get; set; }
+            public string Comments { get; set; }
         }
     }
 }

@@ -27,9 +27,9 @@ namespace GeminiBacklog.Controllers
                                       "JOIN dbo.issuetypelut itl on itl.typeid = i.isstype " +
                                       "JOIN dbo.issueprioritylut p on p.priorityid = i.isspriority " +
                                       "WHERE userid = @userId " +
-                                      " AND isl.statusdesc NOT IN ('Closed')";
-
-
+                                      " AND isl.statusdesc NOT IN ('Closed') " +
+                                      "ORDER BY i.issueid";
+        
         [Route("issues/{userId}")]
         public dynamic Get(int userId)
         {

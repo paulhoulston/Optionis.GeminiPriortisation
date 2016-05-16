@@ -107,7 +107,7 @@
             <div id="dates">
             </div>
             <div id="history" />
-            <div id="assignedTasks" class="row">
+            <div id="assignedTasks">
                 <h4>Assigned Tasks</h4>
                 <div></div>
             </div>
@@ -123,8 +123,8 @@
     <script id="issues-template" type="text/x-handlebars-template">
         <div class="row">
             <div class="column grid_1 strong">Issue</div>
-            <div class="column grid_6 strong">Summary</div>
-            <div class="column grid_1 strong">Status</div>
+            <div class="column grid_4 strong">Summary</div>
+            <div class="column grid_2 strong">Status</div>
             <div class="column grid_1 strong">Type</div>
             <div class="column grid_1 strong">DueDate</div>
             <div class="column grid_1 strong">Created</div>
@@ -133,8 +133,8 @@
         {{#issues}}
         <div class="row bordered">
             <div class="column grid_1">{{issue}}</div>
-            <div class="column grid_6">{{summary}}</div>
-            <div class="column grid_1">{{status}}</div>
+            <div class="column grid_4">{{summary}}</div>
+            <div class="column grid_2">{{status}}</div>
             <div class="column grid_1">{{type}}</div>
             <div class="column grid_1">{{#if dueDate}} {{dueDate}} {{else}}&nbsp;{{/if}}</div>
             <div class="column grid_1">{{created}}</div>
@@ -143,34 +143,33 @@
         {{/issues}}
     </script>
     <script id="history-template" type="text/x-handlebars-template">
-        <div class="row">
-            <div class="column grid_1 strong">ID</div>
-            <div class="column grid_6 strong">Issue</div>
-            <div class="column grid_1 strong">Monday</div>
-            <div class="column grid_1 strong">Tuesday</div>
-            <div class="column grid_1 strong">Wednesday</div>
-            <div class="column grid_1 strong">Thursday</div>
-            <div class="column grid_1 strong">Friday</div>
+        {{#dates}}
+        <div class="day">
+            <h2>{{dayOfWeek}}</h2>
+            {{#each issues}}
+            <div class="row">
+                <div class="column grid_1">{{geminiRef}}</div>
+                <div class="column grid_1">{{total.hours}}h {{total.minutes}}m</div>
+                <div class="column grid_10">{{issue}}</div>
+            </div>
+            {{#tasks}}
+            <div class="row">
+                <div class="column grid_2">&nbsp;</div>
+                <div class="column grid_10 italic">&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;{{comments}} [{{total.hours}}h {{total.minutes}}m]</div>
+            </div>
+            {{/tasks}}
+            {{else}}
+            <div class="row">
+                <div class="column grid_2">&nbsp;</div>
+                <div class="column grid_10 italic">No time logged for the day</div>
+            </div>
+            {{/each}}
+            <div class="row">
+                <div class="column grid_1 strong">&nbsp;</div>
+                <div class="column grid_1 strong">{{total.hours}}h {{total.minutes}}m</div>
+            </div>
         </div>
-        {{#history}}
-        <div class="row">
-            <div class="column grid_1">{{geminiRef}}</div>
-            <div class="column grid_6">{{issue}}</div>
-            <div class="column grid_1">{{monday}}</div>
-            <div class="column grid_1">{{tuesday}}</div>
-            <div class="column grid_1">{{wednesday}}</div>
-            <div class="column grid_1">{{thursday}}</div>
-            <div class="column grid_1">{{friday}}</div>
-        </div>
-        {{/history}}
-        <div class="row sum">
-            <div class="column grid_7 strong alignRight">Total:</div>
-            <div class="column grid_1">{{total.monday}}</div>
-            <div class="column grid_1">{{total.tuesday}}</div>
-            <div class="column grid_1">{{total.wednesday}}</div>
-            <div class="column grid_1">{{total.thursday}}</div>
-            <div class="column grid_1">{{total.friday}}</div>
-        </div>
+        {{/dates}}
     </script>
 </body>
 </html>
