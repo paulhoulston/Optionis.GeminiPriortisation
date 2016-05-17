@@ -1,5 +1,6 @@
 ﻿SELECT
 	i.issueid AS IssueId,
+    i.projid AS Project,
 	i.summary AS Summary,
 	isl.statusdesc AS [Status],
 	itl.typedesc AS [Type],
@@ -24,6 +25,7 @@ WHERE userid = 39
 CREATE TABLE #Prioritised (
 	Id INT PRIMARY KEY IDENTITY,
 	IssueId INT,
+    Project INT,
 	Summary NVARCHAR(255),
 	[Status] NVARCHAR(255),
 	[Type] NVARCHAR(255),
@@ -35,7 +37,7 @@ CREATE TABLE #Prioritised (
 
 -- Prioritise project first
 INSERT INTO #Prioritised
-SELECT IssueId, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
+SELECT IssueId, Project, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
 FROM #Temp
 WHERE [Type] = 'Project'
   AND IssueId NOT IN (SELECT IssueId FROM #Prioritised)
@@ -43,7 +45,7 @@ ORDER BY [Priority] DESC, ISNULL(DueDate, '01-Jan-3000'), Created
 
 -- Prioritise tickets
 INSERT INTO #Prioritised
-SELECT IssueId, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
+SELECT IssueId, Project, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
 FROM #Temp
 WHERE [IssueType] = 'Ticket'
   AND IssueId NOT IN (SELECT IssueId FROM #Prioritised)
@@ -51,7 +53,7 @@ ORDER BY [Priority] DESC, ISNULL(DueDate, '01-Jan-3000'), Created
 
 -- Prioritise bugs
 INSERT INTO #Prioritised
-SELECT IssueId, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
+SELECT IssueId, Project, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
 FROM #Temp
 WHERE [Type] = 'Bug' AND [IssueType] = 'CR'
   AND IssueId NOT IN (SELECT IssueId FROM #Prioritised)
@@ -59,7 +61,7 @@ ORDER BY [Priority] DESC, ISNULL(DueDate, '01-Jan-3000'), Created
 
 -- Prioritise converted tickets
 INSERT INTO #Prioritised
-SELECT IssueId, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
+SELECT IssueId, Project, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
 FROM #Temp
 WHERE [Type] = 'Query'
   AND IssueId NOT IN (SELECT IssueId FROM #Prioritised)
@@ -67,17 +69,19 @@ ORDER BY [Priority] DESC, ISNULL(DueDate, '01-Jan-3000'), Created
 
 -- Insert everything left over
 INSERT INTO #Prioritised
-SELECT IssueId, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
+SELECT IssueId, Project, Summary, [Status], [Type], DueDate, Created, [Priority], PriorityDesc, IssueType
 FROM #Temp
 WHERE IssueId NOT IN (SELECT IssueId FROM #Prioritised)
 ORDER BY [Priority] DESC, ISNULL(DueDate, '01-Jan-3000'), Created
 
 SELECT 
+    IssueId,
 	CASE
 		WHEN IssueType = 'Ticket' THEN 'T-' + CONVERT(NVARCHAR(10), IssueId)
 		WHEN IssueType = 'CR' THEN 'CR-' + CONVERT(NVARCHAR(10), IssueId)
 		ELSE 'PROB-' + CONVERT(NVARCHAR(10), IssueId)
 	END AS Issue,
+    Project,
 	Summary,
 	[Status],
 	[Type],

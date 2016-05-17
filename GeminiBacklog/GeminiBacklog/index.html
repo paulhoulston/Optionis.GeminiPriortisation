@@ -132,7 +132,9 @@
         </div>
         {{#issues}}
         <div class="row bordered">
-            <div class="column grid_1">{{issue}}</div>
+            <div class="column grid_1">
+                <a href="{{geminiUri}}">{{issue}}</a>
+            </div>
             <div class="column grid_4">{{summary}}</div>
             <div class="column grid_2">{{status}}</div>
             <div class="column grid_1">{{type}}</div>

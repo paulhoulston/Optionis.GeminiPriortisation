@@ -27,3 +27,4 @@ h2 { font-size: 1.1em }
 h4 { font-size: 1.0em; margin: 10px }
 #assignedTasks { background-color: #f0f0f0; margin-bottom: 25px; padding-bottom: 10px }
 .day { padding: 10px; border: 1px solid #a0a0a0; margin-top: 7px }
+.bordered { border-top: 1px solid #a0a0a0; padding-top: 10px; padding-bottom: 10px }
