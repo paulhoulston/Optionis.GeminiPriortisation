@@ -3,6 +3,7 @@
 	CASE
 		WHEN i.projid = 12 THEN 'T-' + CAST(i.issueid AS VARCHAR)
 		WHEN i.projid = 14 THEN 'CR-' + CAST(i.issueid AS VARCHAR)
+		ELSE 'PROB-' + CAST(i.issueid AS VARCHAR)
 	END AS GeminiRef,
 	i.summary AS Issue,
 	SUM(tt.hours*60 + tt.minutes) AS WorkTimeInMinutes,
