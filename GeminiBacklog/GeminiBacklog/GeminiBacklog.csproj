@@ -119,6 +119,7 @@
     <Content Include="index.html" />
     <EmbeddedResource Include="Queries\DevPriorities.sql" />
     <EmbeddedResource Include="Queries\WorkHistory.sql" />
+    <EmbeddedResource Include="Queries\AssignedIssues.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
