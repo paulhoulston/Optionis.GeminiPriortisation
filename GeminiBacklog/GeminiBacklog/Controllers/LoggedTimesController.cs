@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
-using Dapper;
+using GeminiBacklog.Controllers.DataAccess;
 
 namespace GeminiBacklog.Controllers
 {
     public class LoggedTimesController : ApiController
     {
-        static readonly string _connectionString = ConfigurationManager.ConnectionStrings["Gemini"].ConnectionString;
         static readonly string _sql;
 
         static LoggedTimesController()
@@ -55,14 +52,7 @@ namespace GeminiBacklog.Controllers
 
         static IEnumerable<HistoryModel> HistoryItems(int userId, DateTime startDate)
         {
-            IEnumerable<HistoryModel> results = null;
-            using (var sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                results = sqlConnection.Query<HistoryModel>(_sql, new { UserId = userId, StartDate = startDate });
-                sqlConnection.Close();
-            }
-            return results;
+            return new DBWrapper().Query<HistoryModel>(_sql, new { UserId = userId, StartDate = startDate });
         }
 
         class Total

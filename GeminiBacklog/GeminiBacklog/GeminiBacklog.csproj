@@ -142,6 +142,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ApplicationEnhancementsController.cs" />
     <Compile Include="Controllers\BAUTasksController.cs" />
+    <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />

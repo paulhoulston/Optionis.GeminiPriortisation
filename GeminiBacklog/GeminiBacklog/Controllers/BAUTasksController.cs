@@ -1,16 +1,13 @@
-using System.Configuration;
-using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Web.Http;
-using Dapper;
+using GeminiBacklog.Controllers.DataAccess;
 using GeminiBacklog.Models;
 
 namespace GeminiBacklog.Controllers
 {
     public class BAUTasksController : ApiController
     {
-        static readonly string _connectionString = ConfigurationManager.ConnectionStrings["Gemini"].ConnectionString;
         static readonly string _sql;
 
         static BAUTasksController()
@@ -25,14 +22,7 @@ namespace GeminiBacklog.Controllers
         // GET api/<controller>
         public dynamic Get()
         {
-            dynamic results = null;
-            using (var sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                results = new { Issues = sqlConnection.Query<IssueModel>(_sql) };
-                sqlConnection.Close();
-            }
-            return results;
+            return new { Issues = new DBWrapper().Query<IssueModel>(_sql) };
         }
     }
 }
