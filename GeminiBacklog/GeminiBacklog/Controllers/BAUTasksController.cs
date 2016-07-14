@@ -1,4 +1,3 @@
-﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -9,14 +8,14 @@ using GeminiBacklog.Models;
 
 namespace GeminiBacklog.Controllers
 {
-    public class ApplicationEnhancementsController : ApiController
+    public class BAUTasksController : ApiController
     {
         static readonly string _connectionString = ConfigurationManager.ConnectionStrings["Gemini"].ConnectionString;
         static readonly string _sql;
 
-        static ApplicationEnhancementsController()
+        static BAUTasksController()
         {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.ApplicationEnhancements.sql"))
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.BAUTasks.sql"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 _sql = reader.ReadToEnd();
@@ -36,5 +35,4 @@ namespace GeminiBacklog.Controllers
             return results;
         }
     }
-
 }
