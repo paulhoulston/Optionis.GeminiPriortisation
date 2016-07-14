@@ -134,6 +134,7 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\Dashboard.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
