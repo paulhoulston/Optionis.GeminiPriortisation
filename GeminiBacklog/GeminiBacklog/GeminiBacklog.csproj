@@ -131,6 +131,7 @@
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
     <None Include="Properties\PublishProfiles\Intranet - TTeamTimeLogging.pubxml" />
+    <None Include="Properties\PublishProfiles\PGAPPW02.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
