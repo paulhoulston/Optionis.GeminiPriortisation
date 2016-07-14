@@ -16,12 +16,12 @@
             return $(opts.destinationSelector).html(template(opts.data));
         }
 
-        function getPriortisedBacklog() {
-            $.get(formatString('{0}/priorities', sitePath), function (issues) {
-                bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: '#backlog' });
+        function getIssues(uri, selector) {
+            $.get(formatString(uri, sitePath), function (issues) {
+                bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: selector });
             });
         }
-
+        
         function getWorkHistoryForUser() {
             var tabIndex = $('#timesheetsTabs').tabs('option', 'active'),
                 userId = $($('#timesheetsTabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
@@ -66,7 +66,9 @@
 
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
 
-            getPriortisedBacklog();
+            getIssues('{0}/priorities', '#backlog');
+            getIssues('{0}/bautasks', '#bau');
+            getIssues('{0}/applicationenhancements', '#enhancements');
             bindAvailableDates();
         }
 
