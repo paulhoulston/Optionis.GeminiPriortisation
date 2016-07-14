@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
 
@@ -10,17 +8,8 @@ namespace GeminiBacklog.Controllers
 {
     public class LoggedTimesController : ApiController
     {
-        static readonly string _sql;
-
-        static LoggedTimesController()
-        {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.WorkHistory.sql"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                _sql = reader.ReadToEnd();
-            }
-        }
-
+        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.WorkHistory.sql");
+        
         [Route("loggedtimes/{userId}/{startDate}")]
         public dynamic Get(int userId, DateTime startDate)
         {

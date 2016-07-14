@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
@@ -8,22 +9,11 @@ namespace GeminiBacklog.Controllers
 {
     public class ApplicationEnhancementsController : ApiController
     {
-        static readonly string _sql;
+        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.ApplicationEnhancements.sql");
 
-        static ApplicationEnhancementsController()
-        {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.ApplicationEnhancements.sql"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                _sql = reader.ReadToEnd();
-            }
-        }
-
-        // GET api/<controller>
         public dynamic Get()
         {
             return new { Issues = new DBWrapper().Query<IssueModel>(_sql) };
         }
     }
-
 }

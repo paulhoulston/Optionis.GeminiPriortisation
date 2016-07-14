@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
-using System.Web.Http;
+﻿using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
 using GeminiBacklog.Models;
 
@@ -8,16 +6,7 @@ namespace GeminiBacklog.Controllers
 {
     public class PrioritiesController : ApiController
     {
-        static readonly string _sql;
-
-        static PrioritiesController()
-        {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GeminiBacklog.Queries.DevPriorities.sql"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                _sql = reader.ReadToEnd();
-            }
-        }
+        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.DevPriorities.sql");
 
         public dynamic Get()
         {
