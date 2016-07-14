@@ -23,8 +23,8 @@
         }
 
         function getWorkHistoryForUser() {
-            var tabIndex = $('#tabs').tabs('option', 'active'),
-                userId = $($('#tabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
+            var tabIndex = $('#timesheetsTabs').tabs('option', 'active'),
+                userId = $($('#timesheetsTabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
                 selectedDate = $('#availableDates').val(),
                 url = formatString('{0}/loggedtimes/{1}/{2}', sitePath, userId, selectedDate);
 
@@ -51,7 +51,8 @@
             $.get(formatString('{0}/permissibledates', sitePath), function (dates) {
                 bindToTemplate({
                     data: dates,
-                    templateSelector: '#availabledates-template', destinationSelector: '#dates'
+                    templateSelector: '#availabledates-template',
+                    destinationSelector: '#dates'
                 }).on('change', getWorkHistoryForUser);
             });
         }
@@ -59,8 +60,11 @@
         function createTabs(people) {
             bindToTemplate({
                 templateSelector: '#tabs-template',
-                data: people, destinationSelector: '#tabs'
+                data: people,
+                destinationSelector: '#tabs'
             }).tabs({ activate: getWorkHistoryForUser });
+
+            $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
 
             getPriortisedBacklog();
             bindAvailableDates();

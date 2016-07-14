@@ -18,18 +18,23 @@
     <script id="tabs-template" type="text/x-handlebars-template">
         <ul>
             <li><a href="#backlog">Dev Priorities</a></li>
-            {{#people}}
-            <li data-gemini-user-id="{{geminiId}}"><a href="#workdone">{{name}}</a></li>
-            {{/people}}
+            <li><a href="#timesheetsTabs">Time Logging</a></li>
         </ul>
         <div id="backlog"></div>
-        <div id="workdone">
-            <div id="dates">
-            </div>
-            <div id="history" />
-            <div id="assignedTasks">
-                <h4>Assigned Tasks</h4>
-                <div></div>
+        <div id="timesheetsTabs">
+            <ul>
+                {{#people}}
+                <li data-gemini-user-id="{{geminiId}}"><a href="#workdone">{{name}}</a></li>
+                {{/people}}
+            </ul>
+            <div id="workdone">
+                <div id="dates">
+                </div>
+                <div id="history" />
+                <div id="assignedTasks">
+                    <h4>Assigned Tasks</h4>
+                    <div></div>
+                </div>
             </div>
         </div>
     </script>
