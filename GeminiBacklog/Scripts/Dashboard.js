@@ -82,11 +82,11 @@
         // Format the date
         Handlebars.registerHelper("formatDate", function (datetime, format) {
             var parsedDate = new Date(datetime);
-
             return formatString('{0}/{1}/{2}', parsedDate.getDay(), parsedDate.getMonth(), parsedDate.getFullYear());
         });
 
         sitePath = getPath();
         $.getJSON(formatString('{0}/people', sitePath), createTabs);
+        getIssues({ uri: '{0}/siteversion', selector: 'footer', template: '#footer-template' });
     }
 };

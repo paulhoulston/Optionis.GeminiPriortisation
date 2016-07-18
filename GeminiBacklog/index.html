@@ -14,7 +14,14 @@
     </script>
 </head>
 <body>
-    <div id="tabs"></div>
+    <div class="page-wrap">
+        <div id="tabs"></div>
+    </div>
+    <footer></footer>
+
+    <script id="footer-template" type="text/x-handlebars-template">
+        version {{version}}
+    </script>
     <script id="tabs-template" type="text/x-handlebars-template">
         <ul>
             <li><a href="#backlog">Dev Priorities</a></li>
