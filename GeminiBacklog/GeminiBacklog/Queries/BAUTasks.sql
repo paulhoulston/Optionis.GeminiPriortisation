@@ -22,13 +22,13 @@
               WHEN i.duedate < (GETDATE()) THEN '1 - Overdue' 
               WHEN i.duedate between GETDATE () AND (GETDATE() + 28) THEN '2 - Due Soon'
               ELSE '3 - Not Due' 
-       END AS 'DueSoon?', 
+       END AS DueSoon, 
        i.duedate AS DueDate, 
        i.created AS Created, 
        p.prioritydesc AS PriorityDesc, 
        i.estimatedays AS EstDays, 
     i.estimatehours AS EstHours, 
-       c.fielddata AS 'IT Owner'
+       c.fielddata AS ITOwner
 FROM            
        issueresource AS ir 
        INNER JOIN issues AS i ON ir.issueid = i.issueid 

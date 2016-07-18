@@ -122,6 +122,7 @@
     <EmbeddedResource Include="Queries\AssignedIssues.sql" />
     <EmbeddedResource Include="Queries\ApplicationEnhancements.sql" />
     <EmbeddedResource Include="Queries\BAUTasks.sql" />
+    <EmbeddedResource Include="Queries\GetResouresForIssue.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
@@ -145,6 +146,8 @@
     <Compile Include="Controllers\BAUTasksController.cs" />
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
+    <Compile Include="Models\AssignedResource.cs" />
+    <Compile Include="Models\BAUTaskModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />

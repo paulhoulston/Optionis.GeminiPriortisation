@@ -85,7 +85,7 @@ SELECT
 	Summary,
 	[Status],
 	[Type],
-	CASE WHEN DueDate IS NULL THEN '' ELSE CONVERT(VARCHAR(10), DueDate, 103) END AS DueDate,
+	CASE WHEN DueDate IS NULL THEN NULL ELSE CONVERT(VARCHAR(10), DueDate, 103) END AS DueDate,
 	CONVERT(VARCHAR(10), Created, 103) AS Created,
 	REPLACE(REPLACE(REPLACE(REPLACE(PriorityDesc, '1 - ', ''), '2 - ', ''), '3 - ', ''), '4 - ', '') AS [Priority]
 FROM #Prioritised

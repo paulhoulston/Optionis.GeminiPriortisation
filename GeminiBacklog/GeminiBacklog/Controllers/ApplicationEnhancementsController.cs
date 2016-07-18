@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
+﻿using System.Linq;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
 using GeminiBacklog.Models;
@@ -9,11 +7,20 @@ namespace GeminiBacklog.Controllers
 {
     public class ApplicationEnhancementsController : ApiController
     {
-        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.ApplicationEnhancements.sql");
+        static readonly string _getIssuesSql = SqlQueries.GetSql("GeminiBacklog.Queries.ApplicationEnhancements.sql");
+        static readonly string _getAssignedResourceSql = SqlQueries.GetSql("GeminiBacklog.Queries.GetResouresForIssue.sql");
 
         public dynamic Get()
         {
-            return new { Issues = new DBWrapper().Query<IssueModel>(_sql) };
+            var dbWrapper = new DBWrapper();
+            var issues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql);
+
+            foreach (var issue in issues)
+            {
+                issue.AssignedTo = dbWrapper.Query<AssignedResource>(_getAssignedResourceSql, new { issueId = issue.IssueId }).Select(resource => resource.UserName);
+            }
+
+            return new { Issues = issues };
         }
     }
 }

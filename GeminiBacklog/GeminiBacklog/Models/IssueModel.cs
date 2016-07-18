@@ -1,3 +1,4 @@
+using System;
 using System.Configuration;
 
 namespace GeminiBacklog.Models
@@ -11,10 +12,11 @@ namespace GeminiBacklog.Models
         public string Summary { get; set; }
         public string Status { get; set; }
         public string Type { get; set; }
-        public string DueDate { get; set; }
-        public string Created { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? Created { get; set; }
         public string Priority { get; set; }
         public string Project { get; set; }
         public string GeminiUri { get { return string.Format(_viewIssueUri, IssueId, Project); } }
     }
+
 }

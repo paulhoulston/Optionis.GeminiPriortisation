@@ -9,7 +9,7 @@
 	i.summary AS Summary,
 	isl.statusdesc AS[Status],
     itl.typedesc AS[Type],
-    CASE WHEN i.duedate IS NULL THEN '' ELSE CONVERT(VARCHAR(10), i.duedate, 103) END AS DueDate,
+    CASE WHEN i.duedate IS NULL THEN NULL ELSE CONVERT(VARCHAR(10), i.duedate, 103) END AS DueDate,
     CONVERT(VARCHAR(10), i.created, 103) AS Created,
     REPLACE(REPLACE(REPLACE(REPLACE(p.prioritydesc, '1 - ', ''), '2 - ', ''), '3 - ', ''), '4 - ', '') AS[Priority]
 FROM dbo.issueresource ir

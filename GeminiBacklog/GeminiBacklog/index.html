@@ -67,8 +67,34 @@
             <div class="column grid_4">{{summary}}</div>
             <div class="column grid_2">{{status}}</div>
             <div class="column grid_1">{{type}}</div>
-            <div class="column grid_1">{{#if dueDate}} {{dueDate}} {{else}}&nbsp;{{/if}}</div>
-            <div class="column grid_1">{{created}}</div>
+            <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
+            <div class="column grid_1">{{formatDate created}}</div>
+            <div class="column grid_1">{{priority}}</div>
+        </div>
+        {{/issues}}
+    </script>
+    <script id="enhancements-template" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="column grid_1 strong">Issue</div>
+            <div class="column grid_4 strong">Summary</div>
+            <div class="column grid_2 strong">Assigned To</div>
+            <div class="column grid_2 strong">Status</div>
+            <div class="column grid_1 strong">DueDate</div>
+            <div class="column grid_1 strong">Priority</div>
+        </div>
+        {{#issues}}
+        <div class="row bordered">
+            <div class="column grid_1">
+                <a target="_blank" href="{{geminiUri}}">{{issue}}</a>
+            </div>
+            <div class="column grid_4">{{summary}}</div>
+            <div class="column grid_2">
+                {{#assignedTo}}
+                <p>{{.}}</p>
+                {{/assignedTo}}
+            </div>
+            <div class="column grid_2">{{status}}</div>
+            <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
             <div class="column grid_1">{{priority}}</div>
         </div>
         {{/issues}}

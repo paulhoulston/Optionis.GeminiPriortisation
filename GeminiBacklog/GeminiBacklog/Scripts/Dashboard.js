@@ -16,12 +16,12 @@
             return $(opts.destinationSelector).html(template(opts.data));
         }
 
-        function getIssues(uri, selector) {
-            $.get(formatString(uri, sitePath), function (issues) {
-                bindToTemplate({ data: issues, templateSelector: '#issues-template', destinationSelector: selector });
+        function getIssues(opts) {
+            $.get(formatString(opts.uri, sitePath), function (issues) {
+                bindToTemplate({ data: issues, templateSelector: opts.template, destinationSelector: opts.selector });
             });
         }
-        
+
         function getWorkHistoryForUser() {
             var tabIndex = $('#timesheetsTabs').tabs('option', 'active'),
                 userId = $($('#timesheetsTabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
@@ -66,9 +66,9 @@
 
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
 
-            getIssues('{0}/priorities', '#backlog');
-            getIssues('{0}/bautasks', '#bau');
-            getIssues('{0}/applicationenhancements', '#enhancements');
+            getIssues({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template' });
+            getIssues({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template' });
+            getIssues({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template' });
             bindAvailableDates();
         }
 
@@ -78,6 +78,13 @@
                 window.location.pathname.substring(0, index) :
                 window.location.pathname;
         }
+
+        // Format the date
+        Handlebars.registerHelper("formatDate", function (datetime, format) {
+            var parsedDate = new Date(datetime);
+
+            return formatString('{0}/{1}/{2}', parsedDate.getDay(), parsedDate.getMonth(), parsedDate.getFullYear());
+        });
 
         sitePath = getPath();
         $.getJSON(formatString('{0}/people', sitePath), createTabs);
