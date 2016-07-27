@@ -1,64 +1,55 @@
-﻿Dashboard = {
+﻿var Dashboard = {
+    formatString: function (str, args) {
+        args = typeof args === 'object' ? args : Array.prototype.slice.call(arguments, 1);
+        return str.replace(/\{([^}]+)\}/gm, function () {
+            return args[arguments[1]];
+        });
+    },
+
+    bindToTemplate: function (opts) {
+        var source = $(opts.templateSelector).html(),
+                template = Handlebars.compile(source);
+        return $(opts.destinationSelector).html(template(opts.data));
+    },
+
+    bindToTemplateWithUrl: function (opts) {
+        $.get(Dashboard.formatString(opts.uri, opts.sitePath), function (data) {
+            Dashboard.bindToTemplate({ data: data, templateSelector: opts.template, destinationSelector: opts.selector });
+        });
+        if (opts.onComplete) {
+            opts.onComplete();
+        }
+    },
+
     init: function () {
 
         var sitePath;
 
-        function formatString(str, args) {
-            args = typeof args === 'object' ? args : Array.prototype.slice.call(arguments, 1);
-            return str.replace(/\{([^}]+)\}/gm, function () {
-                return args[arguments[1]];
-            });
-        }
-
-        function bindToTemplate(opts) {
-            var source = $(opts.templateSelector).html(),
-                    template = Handlebars.compile(source);
-            return $(opts.destinationSelector).html(template(opts.data));
-        }
-
-        function getIssues(opts) {
-            $.get(formatString(opts.uri, sitePath), function (issues) {
-                bindToTemplate({ data: issues, templateSelector: opts.template, destinationSelector: opts.selector });
-            });
-        }
-
         function getWorkHistoryForUser() {
             var tabIndex = $('#timesheetsTabs').tabs('option', 'active'),
                 userId = $($('#timesheetsTabs').tabs().find('li')[tabIndex]).attr('data-gemini-user-id'),
-                selectedDate = $('#availableDates').val(),
-                url = formatString('{0}/loggedtimes/{1}/{2}', sitePath, userId, selectedDate);
+                selectedDate = $('#availableDates').val();
 
             if (userId) {
-                $.get(url, function (data) {
-                    bindToTemplate({
-                        data: data,
-                        templateSelector: '#history-template',
-                        destinationSelector: '#history'
-                    });
-
-                    $.get(formatString('{0}/issues/{1}', sitePath, userId), function (data) {
-                        bindToTemplate({
-                            data: data,
-                            templateSelector: '#issues-template',
-                            destinationSelector: '#assignedTasks div'
-                        });
-                    });
+                Dashboard.bindToTemplateWithUrl({
+                    uri: Dashboard.formatString('{0}/loggedtimes/{1}/{2}', '{0}', userId, selectedDate),
+                    selector: '#history',
+                    template: '#history-template',
+                    sitePath: sitePath,
+                    onComplete: function () {
+                        Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/issues/{1}', '{0}', userId), selector: '#assignedTasks div', template: '#issues-template', sitePath: sitePath });
+                    }
                 });
             }
         }
 
-        function bindAvailableDates() {
-            $.get(formatString('{0}/permissibledates', sitePath), function (dates) {
-                bindToTemplate({
-                    data: dates,
-                    templateSelector: '#availabledates-template',
-                    destinationSelector: '#dates'
-                }).on('change', getWorkHistoryForUser);
-            });
-        }
-
         function createTabs(people) {
-            bindToTemplate({
+
+            function onPermissableDatesBound() {
+                $('#dates').on('change', getWorkHistoryForUser);
+            }
+
+            Dashboard.bindToTemplate({
                 templateSelector: '#tabs-template',
                 data: people,
                 destinationSelector: '#tabs'
@@ -66,10 +57,10 @@
 
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
 
-            getIssues({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template' });
-            getIssues({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template' });
-            getIssues({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template' });
-            bindAvailableDates();
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
         }
 
         function getPath() {
@@ -79,14 +70,14 @@
                 window.location.pathname;
         }
 
-        // Format the date
-        Handlebars.registerHelper("formatDate", function (datetime, format) {
-            var parsedDate = new Date(datetime);
-            return formatString('{0}/{1}/{2}', parsedDate.getDay(), parsedDate.getMonth(), parsedDate.getFullYear());
-        });
-
         sitePath = getPath();
-        $.getJSON(formatString('{0}/people', sitePath), createTabs);
-        getIssues({ uri: '{0}/siteversion', selector: 'footer', template: '#footer-template' });
+        $.getJSON(Dashboard.formatString('{0}/people', sitePath), createTabs);
+        Dashboard.bindToTemplateWithUrl({ uri: '{0}/siteversion', selector: 'footer', template: '#footer-template', sitePath: sitePath });
     }
 };
+
+// Format the date
+Handlebars.registerHelper("formatDate", function (datetime) {
+    var parsedDate = new Date(datetime);
+    return Dashboard.formatString('{0}/{1}/{2}', parsedDate.getDay(), parsedDate.getMonth(), parsedDate.getFullYear());
+});
