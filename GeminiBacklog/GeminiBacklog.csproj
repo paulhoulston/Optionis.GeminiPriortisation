@@ -145,6 +145,7 @@
     <Compile Include="Controllers\BAUTasksController.cs" />
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
+    <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\SiteVersionController.cs" />
     <Compile Include="Models\AssignedResource.cs" />
     <Compile Include="Models\BAUTaskModel.cs" />
