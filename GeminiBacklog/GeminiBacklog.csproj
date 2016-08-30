@@ -146,6 +146,7 @@
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
+    <Compile Include="Controllers\ReopenedIssuesController.cs" />
     <Compile Include="Controllers\SiteVersionController.cs" />
     <Compile Include="Models\AssignedResource.cs" />
     <Compile Include="Models\BAUTaskModel.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Controllers\PrioritiesController.cs" />
     <Compile Include="Controllers\LoggedTimesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Queries\ReopenedIssues.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
