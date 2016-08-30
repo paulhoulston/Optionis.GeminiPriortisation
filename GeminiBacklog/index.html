@@ -142,14 +142,17 @@
     <script id="metrics-template" type="text/x-handlebars">
         <div>
             <h2>Re-Opened Issues</h2>
-            <div>
-                <span class="strong">Last 1 Month: </span><span>{{reopenedIssues.last1Months.count}}</span>
+            <div class="row">
+                <div class="column grid_2 strong alignRight">Last 1 Month:</div>
+                <div class="column grid_10 alignLeft">{{reopenedIssues.last1Months.count}}</div>
             </div>
-            <div>
-                <span class="strong">Last 3 Months: </span><span>{{reopenedIssues.last3Months.count}}</span>
+            <div class="row">
+                <div class="column grid_2 strong alignRight">Last 3 Months:</div>
+                <div class="column grid_10 alignLeft">{{reopenedIssues.last3Months.count}}</div>
             </div>
-            <div>
-                <span class="strong">Last 6 Months: </span><span>{{reopenedIssues.last6Months.count}}</span>
+            <div class="row">
+                <div class="column grid_2 strong alignRight">Last 6 Months:</div>
+                <div class="column grid_10 alignLeft">{{reopenedIssues.last6Months.count}}</div>
             </div>
         </div>
     </script>
