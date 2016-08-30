@@ -7,8 +7,8 @@
     <script src="Scripts/handlebars.min.js"></script>
     <script src="Scripts/jquery-ui-1.11.4.min.js"></script>
     <script src="Scripts/Dashboard.js"></script>
-    <link href="Content/site.css" rel="stylesheet" />
-    <link href="Content/themes/base/all.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="Content/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="Content/site.css" />
     <script type="text/javascript">
         $(Dashboard.init);
     </script>
@@ -28,7 +28,7 @@
             <li><a href="#bau">BAU Tasks</a></li>
             <li><a href="#enhancements">Application Enhancements</a></li>
             <li><a href="#timesheetsTabs">Time Logging</a></li>
-            <li><a href="#metricsTabs">Metrics</a></li>
+            <li><a href="#metrics">Metrics</a></li>
         </ul>
         <div id="backlog"></div>
         <div id="bau"></div>
@@ -49,8 +49,7 @@
                 </div>
             </div>
         </div>
-        <div id="metrics">
-        </div>
+        <div id="metrics"></div>
     </script>
     <script id="availabledates-template" type="text/x-handlebars">
         <select id="availableDates">
@@ -144,17 +143,47 @@
             <h2>Re-Opened Issues</h2>
             <div class="row">
                 <div class="column grid_2 strong alignRight">Last 1 Month:</div>
-                <div class="column grid_10 alignLeft">{{reopenedIssues.last1Months.count}}</div>
+                <div class="column grid_1 alignCenter">
+                    {{reopenedIssues.last1Months.count}}
+                </div>
+                <div class="column grid_9">
+                    <a href="#" data-uri="{{reopenedIssues.last1Months.uri}}">show issues</a>
+                </div>
+            </div>
+            <div class="row hidden">
+                <div class="column grid_12"></div>
             </div>
             <div class="row">
                 <div class="column grid_2 strong alignRight">Last 3 Months:</div>
-                <div class="column grid_10 alignLeft">{{reopenedIssues.last3Months.count}}</div>
+                <div class="column grid_1 alignCenter">
+                    {{reopenedIssues.last3Months.count}}
+                </div>
+                <div class="column grid_9">
+                    <a href="#" data-uri="{{reopenedIssues.last3Months.uri}}">show issues</a>
+                </div>
             </div>
             <div class="row">
                 <div class="column grid_2 strong alignRight">Last 6 Months:</div>
-                <div class="column grid_10 alignLeft">{{reopenedIssues.last6Months.count}}</div>
+                <div class="column grid_1 alignCenter">
+                    {{reopenedIssues.last6Months.count}}
+                </div>
+                <div class="column grid_9">
+                    <a href="#" data-uri="{{reopenedIssues.last6Months.uri}}">show issues</a>
+                </div>
             </div>
         </div>
+    </script>
+    <script id="reopened-issue-template" type="text/x-handlebars">
+        <div class="row">
+            <div class="column grid_2 strong">Issue</div>
+            <div class="column grid_10 strong">Summary</div>
+        </div>
+        {{#issues}}
+            <div class="row">
+                <div class="column grid_2">{{issue}}</div>
+                <div class="column grid_10">{{summary}}</div>
+            </div>
+        {{/issues}}
     </script>
 </body>
 </html>

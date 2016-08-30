@@ -9,18 +9,17 @@
     bindToTemplate: function (opts) {
         var source = $(opts.templateSelector).html(),
                 template = Handlebars.compile(source);
-        return $(opts.destinationSelector).empty().html(template(opts.data));
+        return $(opts.destinationSelector).html(template(opts.data));
     },
 
     bindToTemplateWithUrl: function (opts) {
-        $.get(Dashboard.formatString(opts.uri, opts.sitePath), function (data) {
-            //console.log(JSON.stringify(data));
-
-            Dashboard.bindToTemplate({ data: data, templateSelector: opts.template, destinationSelector: opts.selector });
+        $.ajax({
+            url: Dashboard.formatString(opts.uri, opts.sitePath),
+            success: function (data) {
+                Dashboard.bindToTemplate({ data: data, templateSelector: opts.template, destinationSelector: opts.selector });
+            },
+            complete: opts.onComplete || function () { }
         });
-        if (opts.onComplete) {
-            opts.onComplete();
-        }
     },
 
     init: function () {
@@ -45,16 +44,16 @@
             }
         }
 
-        function getMetrics() {
-            var el = $('#metricsTabs'),
-                tabIndex = el.tabs('option', 'active'),
-                templateId = $(el.tabs().find('li a')[tabIndex]).attr('data-template');
+        function onMetricsBound() {
+            $('#metrics a[data-uri]').on('click', function (e) {
+                var trg = $(e.currentTarget),
+                    uri = trg.attr('data-uri'),
+                    source = $('#reopened-issue-template').html(),
+                    template = Handlebars.compile(source);
 
-            Dashboard.bindToTemplateWithUrl({
-                uri: Dashboard.formatString('{0}/issues/reopened/{1}', '{0}', '2016-02-10'),
-                selector: '#metric',
-                template: templateId,
-                sitePath: sitePath
+                $.get(uri, function (data) {
+                    trg.after(template(data));
+                });
             });
         }
 
@@ -76,7 +75,7 @@
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
-            Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath, onComplete: onMetricsBound });
         }
 
         function getPath() {
