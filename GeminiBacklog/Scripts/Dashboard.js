@@ -9,11 +9,13 @@
     bindToTemplate: function (opts) {
         var source = $(opts.templateSelector).html(),
                 template = Handlebars.compile(source);
-        return $(opts.destinationSelector).html(template(opts.data));
+        return $(opts.destinationSelector).empty().html(template(opts.data));
     },
 
     bindToTemplateWithUrl: function (opts) {
         $.get(Dashboard.formatString(opts.uri, opts.sitePath), function (data) {
+            //console.log(JSON.stringify(data));
+
             Dashboard.bindToTemplate({ data: data, templateSelector: opts.template, destinationSelector: opts.selector });
         });
         if (opts.onComplete) {
@@ -43,6 +45,19 @@
             }
         }
 
+        function getMetrics() {
+            var el = $('#metricsTabs'),
+                tabIndex = el.tabs('option', 'active'),
+                templateId = $(el.tabs().find('li a')[tabIndex]).attr('data-template');
+
+            Dashboard.bindToTemplateWithUrl({
+                uri: Dashboard.formatString('{0}/issues/reopened/{1}', '{0}', '2016-02-10'),
+                selector: '#metric',
+                template: templateId,
+                sitePath: sitePath
+            });
+        }
+
         function createTabs(people) {
 
             function onPermissableDatesBound() {
@@ -61,6 +76,7 @@
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
+            Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/issues/reopened/{1}', '{0}', '2016-02-10'), selector: '#metrics', template: '#metrics-template', sitePath: sitePath });
         }
 
         function getPath() {

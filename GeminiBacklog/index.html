@@ -28,6 +28,7 @@
             <li><a href="#bau">BAU Tasks</a></li>
             <li><a href="#enhancements">Application Enhancements</a></li>
             <li><a href="#timesheetsTabs">Time Logging</a></li>
+            <li><a href="#metricsTabs">Metrics</a></li>
         </ul>
         <div id="backlog"></div>
         <div id="bau"></div>
@@ -47,6 +48,8 @@
                     <div></div>
                 </div>
             </div>
+        </div>
+        <div id="metrics">
         </div>
     </script>
     <script id="availabledates-template" type="text/x-handlebars">
@@ -134,6 +137,10 @@
             </div>
         </div>
         {{/dates}}
+    </script>
+
+    <script id="metrics-template" type="text/x-handlebars">
+        <span class="strong">Number of issues re-opened in last 6 months: </span><span>{{count}}</span>
     </script>
 </body>
 </html>
