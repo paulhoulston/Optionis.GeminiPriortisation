@@ -146,6 +146,8 @@
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
+    <Compile Include="Controllers\MetricsController.cs" />
+    <Compile Include="Models\ReopenedIssue.cs" />
     <Compile Include="Controllers\ReopenedIssuesController.cs" />
     <Compile Include="Controllers\SiteVersionController.cs" />
     <Compile Include="Models\AssignedResource.cs" />

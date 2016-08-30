@@ -140,7 +140,18 @@
     </script>
 
     <script id="metrics-template" type="text/x-handlebars">
-        <span class="strong">Number of issues re-opened in last 6 months: </span><span>{{count}}</span>
+        <div>
+            <h2>Re-Opened Issues</h2>
+            <div>
+                <span class="strong">Last 1 Month: </span><span>{{reopenedIssues.last1Months.count}}</span>
+            </div>
+            <div>
+                <span class="strong">Last 3 Months: </span><span>{{reopenedIssues.last3Months.count}}</span>
+            </div>
+            <div>
+                <span class="strong">Last 6 Months: </span><span>{{reopenedIssues.last6Months.count}}</span>
+            </div>
+        </div>
     </script>
 </body>
 </html>

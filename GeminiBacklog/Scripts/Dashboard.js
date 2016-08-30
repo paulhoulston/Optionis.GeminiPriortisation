@@ -76,7 +76,7 @@
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
-            Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/issues/reopened/{1}', '{0}', '2016-02-10'), selector: '#metrics', template: '#metrics-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath });
         }
 
         function getPath() {
