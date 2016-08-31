@@ -39,6 +39,7 @@
                     sitePath: sitePath,
                     onComplete: function () {
                         Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/people/issues/{1}', '{0}', userId), selector: '#assignedTasks div', template: '#issues-template', sitePath: sitePath });
+                        Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/people/weeklybreakdown/{1}/{2}', '{0}', userId, '2016-08-08'), selector: '#weeklyBreakdown div', template: '#weekly-breakdown-template', sitePath: sitePath });
                     }
                 });
             }
