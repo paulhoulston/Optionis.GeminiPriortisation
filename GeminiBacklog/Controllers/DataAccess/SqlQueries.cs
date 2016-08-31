@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace GeminiBacklog.Controllers.DataAccess
 {
-    class SqlQueries
+    static class SqlQueries
     {
         public static string GetSql(string resourceName)
         {
