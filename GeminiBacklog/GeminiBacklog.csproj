@@ -139,6 +139,7 @@
     <Compile Include="Controllers\PrioritiesController.cs" />
     <Compile Include="Controllers\LoggedTimesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Queries\IssueTypeBreakDownForUsers.sql" />
     <EmbeddedResource Include="Queries\ReopenedIssues.sql" />
   </ItemGroup>
   <ItemGroup>

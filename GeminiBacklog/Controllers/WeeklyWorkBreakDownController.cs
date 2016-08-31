@@ -19,7 +19,7 @@ namespace GeminiBacklog.Controllers
                 .Select(item => new
                 {
                     item.IssueType,
-                    total = new WeeklyTotal(item.CumulativeMinutes)
+                    total = new WeeklyTotal(item.CumulativeMinutes, WeeklyTotal.MINUTES_IN_WORKING_WEEK)
                 })
             };
         }

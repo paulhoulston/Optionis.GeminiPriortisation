@@ -14,12 +14,12 @@ namespace GeminiBacklog.Controllers
 
     class WeeklyTotal : Total
     {
-        const int MINUTES_IN_WORKING_WEEK = 2250;
+        public const int MINUTES_IN_WORKING_WEEK = 2250;
 
-        public WeeklyTotal(int total)
+        public WeeklyTotal(int total, int availableMinutesInWeek)
             : base(total)
         {
-            PercentageOfWorkingWeek = 100 * total / MINUTES_IN_WORKING_WEEK;
+            PercentageOfWorkingWeek = 100 * total / availableMinutesInWeek;
         }
 
         public int PercentageOfWorkingWeek { get; set; }
