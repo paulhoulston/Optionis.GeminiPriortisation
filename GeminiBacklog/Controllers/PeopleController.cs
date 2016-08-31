@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
@@ -14,8 +13,6 @@ namespace GeminiBacklog.Controllers
 
         public dynamic Get()
         {
-            IEnumerable<Person> people = null;
-
             var userIds = new StringBuilder();
             foreach (var id in _userIds)
                 userIds.AppendFormat("'{0}',", id);
