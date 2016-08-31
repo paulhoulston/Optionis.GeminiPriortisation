@@ -16,7 +16,7 @@ namespace GeminiBacklog.Controllers
                 new
                 {
                     reopenedIssues = new ReopenedIssuesForLast6Months().Get(),
-                    devWorkBreakdown = new WorkBreakdownForDevelopers().Get()
+                    devWork = new WorkBreakdownForDevelopers().Get()
                 };
         }
 
@@ -53,9 +53,10 @@ namespace GeminiBacklog.Controllers
     class WorkBreakdownForDevelopers
     {
         static readonly IEnumerable<int> _devUserIds = ConfigurationManager.AppSettings["GEMINI_DEV_USER_IDS"].Split(',').Select(id => int.Parse(id));
-        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.WeeklyWorkBreakDownForMultipleUsers.sql");
-        private readonly DateTime _startDate;
-        private readonly DBWrapper _dBWrapper;
+        static readonly string _getBreakdownSql = SqlQueries.GetSql("GeminiBacklog.Queries.WeeklyWorkBreakDownForMultipleUsers.sql");
+        static readonly string _getUserSql = SqlQueries.GetSql("GeminiBacklog.Queries.GetUsers.sql");
+        readonly DateTime _startDate;
+        readonly DBWrapper _dBWrapper;
 
         public WorkBreakdownForDevelopers()
         {
@@ -64,6 +65,15 @@ namespace GeminiBacklog.Controllers
         }
 
         public dynamic Get()
+        {
+            return new
+            {
+                developers = GetUsers(),
+                breakdown = GetWorkBreakdown()
+            };
+        }
+
+        IEnumerable<DevWorkBreakdown> GetWorkBreakdown()
         {
             var results = new Dictionary<string, DevWorkBreakdown>();
 
@@ -75,9 +85,14 @@ namespace GeminiBacklog.Controllers
             return results.Values;
         }
 
+        private IEnumerable<User> GetUsers()
+        {
+            return _dBWrapper.Query<User>(_getUserSql, new { userIds = _devUserIds });
+        }
+
         void AddTotalsForWeek(IDictionary<string, DevWorkBreakdown> results, DateTime startDate, Action<string, WeeklyTotal> assignWeeklyTotal)
         {
-            var devWorkBreakdown = _dBWrapper.Query<WorkBreakDown>(_sql, new { startDate = startDate, userIds = _devUserIds });
+            var devWorkBreakdown = _dBWrapper.Query<WorkBreakDown>(_getBreakdownSql, new { startDate = startDate, userIds = _devUserIds });
 
             var availableMinutesInWeek = WeeklyTotal.MINUTES_IN_WORKING_WEEK * _devUserIds.Count();
 
@@ -90,6 +105,14 @@ namespace GeminiBacklog.Controllers
                     });
                 assignWeeklyTotal(item.IssueType, new WeeklyTotal(item.CumulativeMinutes, availableMinutesInWeek, item.StartDate));
             }
+        }
+
+        class User
+        {
+            public int Userid { get; set; }
+            public string Username { get; set; }
+            public string Firstname { get; set; }
+            public string Surname { get; set; }
         }
 
         class DevWorkBreakdown

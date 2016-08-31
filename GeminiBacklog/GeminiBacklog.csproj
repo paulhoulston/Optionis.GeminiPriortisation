@@ -98,6 +98,7 @@
     <EmbeddedResource Include="Queries\BAUTasks.sql" />
     <EmbeddedResource Include="Queries\GetResouresForIssue.sql" />
     <EmbeddedResource Include="Queries\WeeklyWorkBreakDownForUser.sql" />
+    <EmbeddedResource Include="Queries\GetUsers.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />

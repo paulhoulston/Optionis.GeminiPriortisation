@@ -191,12 +191,12 @@
             <h4>Developers Weekly Breakdown</h4>
             <div class="row">
                 <div class="column grid_2 strong">Issue Type</div>
-                <div class="column grid_2 strong">Week {{devWorkBreakdown.1.cumulativeMinutesWeek1.startDateDisplay}}</div>
-                <div class="column grid_2 strong">Week {{devWorkBreakdown.1.cumulativeMinutesWeek2.startDateDisplay}}</div>
-                <div class="column grid_2 strong">Week {{devWorkBreakdown.1.cumulativeMinutesWeek3.startDateDisplay}}</div>
-                <div class="column grid_2 strong">Week {{devWorkBreakdown.1.cumulativeMinutesWeek4.startDateDisplay}}</div>
+                <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek1.startDateDisplay}}</div>
+                <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek2.startDateDisplay}}</div>
+                <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek3.startDateDisplay}}</div>
+                <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek4.startDateDisplay}}</div>
             </div>
-            {{#devWorkBreakdown}}
+            {{#devWork.breakdown}}
             <div class="row">
                 <div class="column grid_2">{{issueType}}</div>
                 <div class="column grid_2">{{cumulativeMinutesWeek1.hours}}h {{cumulativeMinutesWeek1.minutes}}m ({{cumulativeMinutesWeek1.percentageOfWorkingWeek}}%)</div>
@@ -204,7 +204,7 @@
                 <div class="column grid_2">{{cumulativeMinutesWeek3.hours}}h {{cumulativeMinutesWeek3.minutes}}m ({{cumulativeMinutesWeek3.percentageOfWorkingWeek}}%)</div>
                 <div class="column grid_2">{{cumulativeMinutesWeek4.hours}}h {{cumulativeMinutesWeek4.minutes}}m ({{cumulativeMinutesWeek4.percentageOfWorkingWeek}}%)</div>
             </div>
-            {{/devWorkBreakdown}}
+            {{/devWork.breakdown}}
         </div>
     </script>
     <script id="reopened-issue-template" type="text/x-handlebars">
