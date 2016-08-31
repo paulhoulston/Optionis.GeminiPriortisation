@@ -33,12 +33,12 @@
 
             if (userId) {
                 Dashboard.bindToTemplateWithUrl({
-                    uri: Dashboard.formatString('{0}/loggedtimes/{1}/{2}', '{0}', userId, selectedDate),
+                    uri: Dashboard.formatString('{0}/people/loggedtimes/{1}/{2}', '{0}', userId, selectedDate),
                     selector: '#history',
                     template: '#history-template',
                     sitePath: sitePath,
                     onComplete: function () {
-                        Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/issues/{1}', '{0}', userId), selector: '#assignedTasks div', template: '#issues-template', sitePath: sitePath });
+                        Dashboard.bindToTemplateWithUrl({ uri: Dashboard.formatString('{0}/people/issues/{1}', '{0}', userId), selector: '#assignedTasks div', template: '#issues-template', sitePath: sitePath });
                     }
                 });
             }

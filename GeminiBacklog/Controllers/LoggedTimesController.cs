@@ -10,7 +10,7 @@ namespace GeminiBacklog.Controllers
     {
         static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.WorkHistory.sql");
         
-        [Route("loggedtimes/{userId}/{startDate}")]
+        [Route("people/loggedtimes/{userId}/{startDate}")]
         public dynamic Get(int userId, DateTime startDate)
         {
             var historyItems = HistoryItems(userId, startDate);

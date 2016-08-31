@@ -8,7 +8,7 @@ namespace GeminiBacklog.Controllers
     {
         static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.AssignedIssues.sql");
 
-        [Route("issues/{userId}")]
+        [Route("people/issues/{userId}")]
         public dynamic Get(int userId)
         {
             return new { Issues = new DBWrapper().Query<IssueModel>(_sql, new { userId }) };
