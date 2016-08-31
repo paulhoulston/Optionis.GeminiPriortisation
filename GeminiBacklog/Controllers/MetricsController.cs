@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Web.Http;
-using GeminiBacklog.Controllers.DataAccess;
 
 namespace GeminiBacklog.Controllers
 {
     public class MetricsController : ApiController
     {
-        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.ReopenedIssues.sql");
-
         public dynamic Get()
         {
             var last1Months = DateTime.Today.AddMonths(-1);
