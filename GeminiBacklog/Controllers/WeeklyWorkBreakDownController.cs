@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
+using GeminiBacklog.Models;
 
 namespace GeminiBacklog.Controllers
 {
@@ -15,19 +16,13 @@ namespace GeminiBacklog.Controllers
             return new
             {
                 issueTypes = new DBWrapper()
-                .Query<BreakDown>(_sql, new { userId, startDate })
+                .Query<WorkBreakDown>(_sql, new { userId, startDate })
                 .Select(item => new
                 {
                     item.IssueType,
-                    total = new WeeklyTotal(item.CumulativeMinutes, WeeklyTotal.MINUTES_IN_WORKING_WEEK)
+                    total = new WeeklyTotal(item.CumulativeMinutes, WeeklyTotal.MINUTES_IN_WORKING_WEEK, startDate)
                 })
             };
-        }
-
-        public class BreakDown
-        {
-            public string IssueType { get; set; }
-            public int CumulativeMinutes { get; set; }
         }
     }
 }

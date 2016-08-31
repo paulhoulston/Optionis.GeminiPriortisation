@@ -1,3 +1,5 @@
+using System;
+
 namespace GeminiBacklog.Controllers
 {
     class Total
@@ -16,13 +18,15 @@ namespace GeminiBacklog.Controllers
     {
         public const int MINUTES_IN_WORKING_WEEK = 2250;
 
-        public WeeklyTotal(int total, int availableMinutesInWeek)
+        public WeeklyTotal(int total, int availableMinutesInWeek, DateTime startDate)
             : base(total)
         {
+            StartDate = startDate;
             PercentageOfWorkingWeek = 100 * total / availableMinutesInWeek;
         }
 
         public int PercentageOfWorkingWeek { get; set; }
-
+        public DateTime StartDate { get; set; }
+        public string StartDateDisplay { get { return StartDate.ToShortDateString(); } }
     }
 }

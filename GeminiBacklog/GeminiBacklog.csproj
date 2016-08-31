@@ -122,6 +122,7 @@
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
+    <Compile Include="Models\WorkBreakDown.cs" />
     <Compile Include="Models\Total.cs" />
     <Compile Include="Controllers\WeeklyWorkBreakDownController.cs" />
     <Compile Include="Models\ReopenedIssue.cs" />
@@ -139,7 +140,7 @@
     <Compile Include="Controllers\PrioritiesController.cs" />
     <Compile Include="Controllers\LoggedTimesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Queries\IssueTypeBreakDownForUsers.sql" />
+    <EmbeddedResource Include="Queries\WeeklyWorkBreakDownForMultipleUsers.sql" />
     <EmbeddedResource Include="Queries\ReopenedIssues.sql" />
   </ItemGroup>
   <ItemGroup>

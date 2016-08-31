@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
+using GeminiBacklog.Models;
 
 namespace GeminiBacklog.Controllers
 {
@@ -52,31 +53,52 @@ namespace GeminiBacklog.Controllers
     class WorkBreakdownForDevelopers
     {
         static readonly IEnumerable<int> _devUserIds = ConfigurationManager.AppSettings["GEMINI_DEV_USER_IDS"].Split(',').Select(id => int.Parse(id));
-        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.IssueTypeBreakDownForUsers.sql");
+        static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.WeeklyWorkBreakDownForMultipleUsers.sql");
+        private readonly DateTime _startDate;
+        private readonly DBWrapper _dBWrapper;
 
-        class BreakDown
+        public WorkBreakdownForDevelopers()
         {
-            public string IssueType { get; set; }
-            public int CumulativeMinutesWeek1 { get; set; }
-            public int CumulativeMinutesWeek2 { get; set; }
-            public int CumulativeMinutesWeek3 { get; set; }
-            public int CumulativeMinutesWeek4 { get; set; }
+            _startDate = DateTime.Today.AddDays(1 - (int)DateTime.Today.DayOfWeek);
+            _dBWrapper = new DBWrapper();
         }
 
         public dynamic Get()
         {
-            var availableMinutesInWeek = WeeklyTotal.MINUTES_IN_WORKING_WEEK * _devUserIds.Count();
-            var startDate = DateTime.Today.AddDays(1 - (int)DateTime.Today.DayOfWeek - 7);
-            var devWorkBreakdown = new DBWrapper().Query<BreakDown>(_sql, new { startDate, userIds = _devUserIds });
-            return devWorkBreakdown.Select(item => new
-            {
-                item.IssueType,
-                totalWeek1 = new WeeklyTotal(item.CumulativeMinutesWeek1, availableMinutesInWeek),
-                totalWeek2 = new WeeklyTotal(item.CumulativeMinutesWeek2, availableMinutesInWeek),
-                totalWeek3 = new WeeklyTotal(item.CumulativeMinutesWeek3, availableMinutesInWeek),
-                totalWeek4 = new WeeklyTotal(item.CumulativeMinutesWeek4, availableMinutesInWeek)
-            });
+            var results = new Dictionary<string, DevWorkBreakdown>();
 
+            AddTotalsForWeek(results, _startDate.AddDays(-7), (itemType, weeklyTotal) => results[itemType].CumulativeMinutesWeek1 = weeklyTotal);
+            AddTotalsForWeek(results, _startDate.AddDays(-14), (itemType, weeklyTotal) => results[itemType].CumulativeMinutesWeek2 = weeklyTotal);
+            AddTotalsForWeek(results, _startDate.AddDays(-21), (itemType, weeklyTotal) => results[itemType].CumulativeMinutesWeek3 = weeklyTotal);
+            AddTotalsForWeek(results, _startDate.AddDays(-28), (itemType, weeklyTotal) => results[itemType].CumulativeMinutesWeek4 = weeklyTotal);
+
+            return results.Values;
+        }
+
+        void AddTotalsForWeek(IDictionary<string, DevWorkBreakdown> results, DateTime startDate, Action<string, WeeklyTotal> assignWeeklyTotal)
+        {
+            var devWorkBreakdown = _dBWrapper.Query<WorkBreakDown>(_sql, new { startDate = startDate, userIds = _devUserIds });
+
+            var availableMinutesInWeek = WeeklyTotal.MINUTES_IN_WORKING_WEEK * _devUserIds.Count();
+
+            foreach (var item in devWorkBreakdown)
+            {
+                if (!results.ContainsKey(item.IssueType))
+                    results.Add(item.IssueType, new DevWorkBreakdown
+                    {
+                        IssueType = item.IssueType
+                    });
+                assignWeeklyTotal(item.IssueType, new WeeklyTotal(item.CumulativeMinutes, availableMinutesInWeek, item.StartDate));
+            }
+        }
+
+        class DevWorkBreakdown
+        {
+            public string IssueType { get; set; }
+            public WeeklyTotal CumulativeMinutesWeek1 { get; set; }
+            public WeeklyTotal CumulativeMinutesWeek2 { get; set; }
+            public WeeklyTotal CumulativeMinutesWeek3 { get; set; }
+            public WeeklyTotal CumulativeMinutesWeek4 { get; set; }
         }
     }
 }
