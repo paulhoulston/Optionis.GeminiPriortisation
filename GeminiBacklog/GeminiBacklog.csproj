@@ -122,6 +122,7 @@
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
+    <Compile Include="Models\Total.cs" />
     <Compile Include="Controllers\WeeklyWorkBreakDownController.cs" />
     <Compile Include="Models\ReopenedIssue.cs" />
     <Compile Include="Controllers\ReopenedIssuesController.cs" />

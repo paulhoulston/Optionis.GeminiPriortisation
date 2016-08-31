@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using GeminiBacklog.Controllers.DataAccess;
 
@@ -10,9 +10,15 @@ namespace GeminiBacklog.Controllers
         static readonly string _sql = SqlQueries.GetSql("GeminiBacklog.Queries.WeeklyWorkBreakDownForUser.sql");
 
         [Route("people/weeklybreakdown/{userId}/{startDate}")]
-        public IEnumerable<BreakDown> Get(int userId, DateTime startDate)
+        public dynamic Get(int userId, DateTime startDate)
         {
-            return new DBWrapper().Query<BreakDown>(_sql, new { userId, startDate });
+            return new DBWrapper()
+                .Query<BreakDown>(_sql, new { userId, startDate })
+                .Select(item => new
+                {
+                    item.IssueType,
+                    total = new Total(item.CumulativeMinutes)
+                });
         }
 
         public class BreakDown
