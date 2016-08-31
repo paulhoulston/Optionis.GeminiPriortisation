@@ -94,7 +94,7 @@
         {{#issueTypes}}
         <div class="row bordered">
             <div class="column grid_2">{{issueType}}</div>
-            <div class="column grid_2">{{total.hours}}h {{total.minutes}}m ({{total.percentageOfWorkingWeek}}%)</div>
+            <div class="column grid_10">{{total.hours}}h {{total.minutes}}m ({{total.percentageOfWorkingWeek}}%)</div>
         </div>
         {{/issueTypes}}
     </script>
@@ -155,7 +155,7 @@
     </script>
     <script id="metrics-template" type="text/x-handlebars">
         <div>
-            <h2>Re-Opened Issues</h2>
+            <h4>Re-Opened Issues</h4>
             <div class="row">
                 <div class="column grid_2 strong alignRight">Last 1 Month:</div>
                 <div class="column grid_1 alignCenter">
@@ -187,6 +187,25 @@
                 </div>
             </div>
         </div>
+        <div>
+            <h4>Developers Weekly Breakdown</h4>
+            <div class="row">
+                <div class="column grid_2 strong">Issue Type</div>
+                <div class="column grid_2 strong">Week 1</div>
+                <div class="column grid_2 strong">Week 2</div>
+                <div class="column grid_2 strong">Week 3</div>
+                <div class="column grid_2 strong">Week 4</div>
+            </div>
+            {{#devWorkBreakdown}}
+            <div class="row">
+                <div class="column grid_2">{{issueType}}</div>
+                <div class="column grid_2">{{totalWeek1.hours}}h {{totalWeek1.minutes}}m ({{totalWeek1.percentageOfWorkingWeek}}%)</div>
+                <div class="column grid_2">{{totalWeek2.hours}}h {{totalWeek2.minutes}}m ({{totalWeek2.percentageOfWorkingWeek}}%)</div>
+                <div class="column grid_2">{{totalWeek3.hours}}h {{totalWeek3.minutes}}m ({{totalWeek3.percentageOfWorkingWeek}}%)</div>
+                <div class="column grid_2">{{totalWeek4.hours}}h {{totalWeek4.minutes}}m ({{totalWeek4.percentageOfWorkingWeek}}%)</div>
+            </div>
+            {{/devWorkBreakdown}}
+        </div>
     </script>
     <script id="reopened-issue-template" type="text/x-handlebars">
         <div class="row">
@@ -194,10 +213,10 @@
             <div class="column grid_10 strong">Summary</div>
         </div>
         {{#issues}}
-            <div class="row">
-                <div class="column grid_2">{{issue}}</div>
-                <div class="column grid_10">{{summary}}</div>
-            </div>
+        <div class="row">
+            <div class="column grid_2">{{issue}}</div>
+            <div class="column grid_10">{{summary}}</div>
+        </div>
         {{/issues}}
     </script>
 </body>
