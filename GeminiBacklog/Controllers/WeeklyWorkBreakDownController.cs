@@ -12,13 +12,16 @@ namespace GeminiBacklog.Controllers
         [Route("people/weeklybreakdown/{userId}/{startDate}")]
         public dynamic Get(int userId, DateTime startDate)
         {
-            return new DBWrapper()
+            return new
+            {
+                issueTypes = new DBWrapper()
                 .Query<BreakDown>(_sql, new { userId, startDate })
                 .Select(item => new
                 {
                     item.IssueType,
-                    total = new Total(item.CumulativeMinutes)
-                });
+                    total = new WeeklyTotal(item.CumulativeMinutes)
+                })
+            };
         }
 
         public class BreakDown
