@@ -190,6 +190,15 @@
         <div>
             <h4>Developers Weekly Breakdown</h4>
             <div class="row">
+                <div class="column grid_12 strong">Developers</div>
+            </div>
+            {{#devWork.developers}}
+            <div class="row">
+                <div class="column grid_12">{{firstname}} {{surname}}</div>
+            </div>
+            {{/devWork.developers}}
+            <br />
+            <div class="row">
                 <div class="column grid_2 strong">Issue Type</div>
                 <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek1.startDateDisplay}}</div>
                 <div class="column grid_2 strong">Week {{devWork.breakdown.1.cumulativeMinutesWeek2.startDateDisplay}}</div>
