@@ -1,4 +1,9 @@
 ﻿SELECT i.issueid AS IssueId
+    ,CASE
+         WHEN i.projid = 12 THEN 'T-' + CONVERT(NVARCHAR(10), i.issueid)
+		    WHEN i.projid = 14 THEN 'CR-' + CONVERT(NVARCHAR(10), i.issueid)
+		    ELSE 'PROB-' + CONVERT(NVARCHAR(10), i.issueid)
+	 END AS Issue
 	,i.projid AS Project
 	,i.summary AS Summary
 	,isl.statusdesc AS [Status]

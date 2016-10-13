@@ -64,6 +64,12 @@
                 $('#dates').on('change', getWorkHistoryForUser);
             }
 
+
+            function searchIssues() {
+                var searchTerm = $('input[type=text][id="searchIssues"]').val();
+                Dashboard.bindToTemplateWithUrl({ uri: '{0}/searchissues?searchTerm=' + searchTerm, selector: '#searchResults', template: '#issues-template', sitePath: sitePath });
+            }
+
             Dashboard.bindToTemplate({
                 templateSelector: '#tabs-template',
                 data: people,
@@ -71,7 +77,7 @@
             }).tabs({ activate: getWorkHistoryForUser });
 
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
-
+            $('#lnkSearchIssues').click(searchIssues);
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
