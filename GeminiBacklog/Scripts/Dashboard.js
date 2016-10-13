@@ -64,10 +64,18 @@
                 $('#dates').on('change', getWorkHistoryForUser);
             }
 
+            function searchIssues(e) {
+                var searchTerm = $('input[type=text][id="searchIssues"]').val(),
+                    trg = $(e.currentTarget),
+                    loader = $('.loading').removeClass('hidden');
 
-            function searchIssues() {
-                var searchTerm = $('input[type=text][id="searchIssues"]').val();
-                Dashboard.bindToTemplateWithUrl({ uri: '{0}/searchissues?searchTerm=' + searchTerm, selector: '#searchResults', template: '#issues-template', sitePath: sitePath });
+                trg.attr('disabled', 'disabled');
+                Dashboard.bindToTemplateWithUrl({
+                    uri: '{0}/searchissues?searchTerm=' + searchTerm, selector: '#searchResults', template: '#issues-template', sitePath: sitePath, onComplete: function () {
+                        loader.addClass('hidden');
+                        trg.removeAttr('disabled');
+                    }
+                });
             }
 
             Dashboard.bindToTemplate({

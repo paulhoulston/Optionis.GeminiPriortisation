@@ -173,6 +173,20 @@ a {
     a:hover {
         color: #00ca7c;
     }
+    a:disabled {
+        color: #a0a0a0;
+        text-decoration: none
+    }
+
+span.loading {
+    background: url('./images/ajax-loader.gif') no-repeat center right;
+    width: 20px;
+    height: 16px;
+    display: inline-block
+}
+span.loading.hidden {
+    display: none
+}
 
 select {
     margin: 1px;
@@ -183,4 +197,8 @@ select {
 
 .hidden {
     display: none;
+}
+input[type=text] {
+    padding: 2px 4px;
+    margin: 10px 
 }

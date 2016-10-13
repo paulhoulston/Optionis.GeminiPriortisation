@@ -81,6 +81,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\calendar.png" />
     <Content Include="Content\images\ui-bg_diagonals-small_70_303030_40x40.png" />
     <Content Include="Content\images\ui-icons_303030_256x240.png" />
