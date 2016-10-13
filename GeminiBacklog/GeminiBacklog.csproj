@@ -99,6 +99,7 @@
     <EmbeddedResource Include="Queries\GetResouresForIssue.sql" />
     <EmbeddedResource Include="Queries\WeeklyWorkBreakDownForUser.sql" />
     <EmbeddedResource Include="Queries\GetUsers.sql" />
+    <EmbeddedResource Include="Queries\SearchIssues.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
@@ -123,6 +124,7 @@
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
+    <Compile Include="Controllers\SearchIssuesController.cs" />
     <Compile Include="Models\WorkBreakDown.cs" />
     <Compile Include="Models\Total.cs" />
     <Compile Include="Controllers\WeeklyWorkBreakDownController.cs" />
