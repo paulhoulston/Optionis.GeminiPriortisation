@@ -123,9 +123,11 @@
     <Compile Include="Controllers\BAUTasksController.cs" />
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
+    <Compile Include="Controllers\DevAssignedTasksController.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\SearchIssuesController.cs" />
+    <Compile Include="Models\DevIssueModel.cs" />
     <Compile Include="Models\WorkBreakDown.cs" />
     <Compile Include="Models\Total.cs" />
     <Compile Include="Controllers\WeeklyWorkBreakDownController.cs" />
