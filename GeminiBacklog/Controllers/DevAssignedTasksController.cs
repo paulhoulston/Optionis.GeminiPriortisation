@@ -5,7 +5,7 @@ namespace GeminiBacklog.Controllers
 {
     public class DevAssignedTasksController : ApiController
     {
-        [Route("people/devissues")]
+        [Route("devissues")]
         public dynamic Get()
         {
             return new { Issues = new BAUTaskModel[] { } };

@@ -87,6 +87,7 @@
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
             $('#lnkSearchIssues').click(searchIssues);
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/devissues', selector: '#devAssigned', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
