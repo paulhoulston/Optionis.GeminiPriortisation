@@ -6,7 +6,7 @@ namespace GeminiBacklog.Controllers
 {
     class GetIssues
     {
-        readonly string _getIssuesSql = SqlQueries.GetSql("GeminiBacklog.Queries.ApplicationEnhancements.sql");
+        readonly string _getIssuesSql;
         static readonly string _getAssignedResourceSql = SqlQueries.GetSql("GeminiBacklog.Queries.GetResouresForIssue.sql");
 
         public GetIssues(string getIssueSqlKey)
@@ -14,10 +14,10 @@ namespace GeminiBacklog.Controllers
             _getIssuesSql = SqlQueries.GetSql(getIssueSqlKey);
         }
 
-        public dynamic Get()
+        public dynamic Get(object parameters = null)
         {
             var dbWrapper = new DBWrapper();
-            var issues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql);
+            var issues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql, parameters);
 
             foreach (var issue in issues)
             {

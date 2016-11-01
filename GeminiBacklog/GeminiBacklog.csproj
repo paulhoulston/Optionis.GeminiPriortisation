@@ -101,6 +101,7 @@
     <EmbeddedResource Include="Queries\WeeklyWorkBreakDownForUser.sql" />
     <EmbeddedResource Include="Queries\GetUsers.sql" />
     <EmbeddedResource Include="Queries\SearchIssues.sql" />
+    <EmbeddedResource Include="Queries\DevAssigned.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
