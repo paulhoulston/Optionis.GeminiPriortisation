@@ -46,10 +46,8 @@ WHERE c.customfieldid = 34
 	AND c3.customfieldid = 70
 	AND c4.customfieldid = 71
 	AND c5.customfieldid = 72
-	AND i.projid IN (
-		12
-		,14
-		)
+	AND i.projid IN (12, 14)
+    AND (@Filter IS NULL OR @Filter = '' OR (@Filter IS NOT NULL AND @Filter <> '' AND isl.statusdesc = @Filter))
 GROUP BY i.issueid
 	,i.projid
 	,i.summary

@@ -18,7 +18,10 @@
             success: function (data) {
                 Dashboard.bindToTemplate({ data: data, templateSelector: opts.template, destinationSelector: opts.selector });
             },
-            complete: opts.onComplete || function () { }
+            complete: function () {
+                var delegate = opts.onComplete || function () { };
+                delegate(opts);
+            }
         });
     },
 
@@ -78,6 +81,35 @@
                 });
             }
 
+            function bindFilterStatus(opts) {
+                function filterStatus(e) {
+                    var trg = $(e.currentTarget),
+                        status = trg.val(),
+                        uri = trg.attr('data-uri');
+
+                    Dashboard.bindToTemplateWithUrl({
+                        uri: '{0}/' + uri + '?filter=' + status,
+                        selector: opts.selector,
+                        template: opts.template,
+                        sitePath: sitePath,
+                        filter: status,
+                        onComplete: function (o) {
+                            opts.onComplete(o);
+
+                            // Bind the filter value to the drop down
+                            if (o && o.filter) {
+                                $($(o.selector).find('select option')).each(function(i, obj) {
+                                    if ($(obj).val() === o.filter)
+                                        $(obj).attr('selected', 'selected');
+                                });
+                            }
+                        }
+                    });
+                }
+
+                $(opts.selector).find('select').on('change', filterStatus);
+            }
+
             Dashboard.bindToTemplate({
                 templateSelector: '#tabs-template',
                 data: people,
@@ -87,9 +119,9 @@
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
             $('#lnkSearchIssues').click(searchIssues);
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template', sitePath: sitePath });
-            Dashboard.bindToTemplateWithUrl({ uri: '{0}/devissues', selector: '#devAssigned', template: '#enhancements-template', sitePath: sitePath });
-            Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath });
-            Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/devissues', selector: '#devAssigned', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath, onComplete: onMetricsBound });
         }

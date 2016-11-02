@@ -21,5 +21,6 @@ JOIN dbo.issueprioritylut p on p.priorityid = i.isspriority
 JOIN dbo.users u on u.userid = ir.userid
 WHERE ir.userid IN @UserIds
  AND isl.statusdesc NOT IN ('Closed')
+ AND (@Filter IS NULL OR @Filter = '' OR (@Filter IS NOT NULL AND @Filter <> '' AND isl.statusdesc = @Filter))
  AND i.issueid NOT IN (29015, 29017, 44227, 44238, 44239, 29459, 31860)
 ORDER BY isl.seq DESC, u.username, i.issueid

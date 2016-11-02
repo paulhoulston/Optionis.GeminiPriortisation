@@ -14,7 +14,7 @@ namespace GeminiBacklog.Controllers
             _getIssuesSql = SqlQueries.GetSql(getIssueSqlKey);
         }
 
-        public dynamic Get(object parameters = null)
+        public dynamic Get(string uri, object parameters = null)
         {
             var dbWrapper = new DBWrapper();
             var issues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql, parameters);
@@ -24,7 +24,11 @@ namespace GeminiBacklog.Controllers
                 issue.AssignedTo = dbWrapper.Query<AssignedResource>(_getAssignedResourceSql, new { issueId = issue.IssueId }).Select(resource => resource.UserName);
             }
 
-            return new { Issues = issues };
+            return new
+            {
+                Self = uri,
+                Issues = issues
+            };
         }
     }
 }

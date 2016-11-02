@@ -39,7 +39,7 @@ FROM
 WHERE  
        c.customfieldid = 34     
        AND i.projid = 14 
-       -- AND (ir.userid NOT IN (60, 79))
+       AND (@Filter IS NULL OR @Filter = '' OR (@Filter IS NOT NULL AND @Filter <> '' AND isl.statusdesc = @Filter))
 
 GROUP BY 
        i.issueid,
@@ -58,7 +58,6 @@ GROUP BY
               WHEN i.duedate between GETDATE () AND (GETDATE() + 28) THEN '2 - Due Soon'
               ELSE '3 - Not Due' 
        END
-
 
 HAVING        
        (NOT (isl.statusdesc IN (N'Closed', N'On Hold'))) 
