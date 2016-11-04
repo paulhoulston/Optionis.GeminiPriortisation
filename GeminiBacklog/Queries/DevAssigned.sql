@@ -1,4 +1,4 @@
-﻿SELECT
+﻿SELECT DISTINCT
  i.issueId AS IssueId,
  CASE
      WHEN i.projid = 12 THEN 'T-' + CONVERT(NVARCHAR(10), i.issueid)
