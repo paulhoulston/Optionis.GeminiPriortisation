@@ -12,7 +12,8 @@
     CASE WHEN i.duedate IS NULL THEN NULL ELSE CONVERT(VARCHAR(10), i.duedate, 103) END AS DueDate,
     CONVERT(VARCHAR(10), i.created, 103) AS Created,
     REPLACE(REPLACE(REPLACE(REPLACE(p.prioritydesc, '1 - ', ''), '2 - ', ''), '3 - ', ''), '4 - ', '') AS[Priority],
- u.username AS ITOwner
+ u.username AS ITOwner,
+ isl.seq
 FROM dbo.issueresource ir
 JOIN dbo.issues i on ir.issueid = i.issueid
 JOIN dbo.issuestatuslut isl on isl.statusid = i.issstatus
