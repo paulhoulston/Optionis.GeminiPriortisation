@@ -1,6 +1,7 @@
 using System.Linq;
 using GeminiBacklog.Controllers.DataAccess;
 using GeminiBacklog.Models;
+using System.Collections.Generic;
 
 namespace GeminiBacklog.Controllers
 {
@@ -17,17 +18,20 @@ namespace GeminiBacklog.Controllers
         public dynamic Get(string uri, object parameters = null)
         {
             var dbWrapper = new DBWrapper();
-            var issues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql, parameters);
+            var dbIssues = dbWrapper.Query<BAUTaskModel>(_getIssuesSql, parameters);
+            var issuesToReturn = new List<BAUTaskModel>();
 
-            foreach (var issue in issues)
+            foreach (var issueId in dbIssues.Select(i => i.IssueId).Distinct())
             {
+                var issue = dbIssues.First(i => i.IssueId.Equals(issueId));
                 issue.AssignedTo = dbWrapper.Query<AssignedResource>(_getAssignedResourceSql, new { issueId = issue.IssueId }).Select(resource => resource.UserName);
+                issuesToReturn.Add(issue);
             }
 
             return new
             {
                 Self = uri,
-                Issues = issues
+                Issues = issuesToReturn
             };
         }
     }
