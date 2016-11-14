@@ -20,4 +20,4 @@ JOIN dbo.issueprioritylut p on p.priorityid = i.isspriority
 WHERE userid = @userId
  AND isl.statusdesc NOT IN ('Closed')
  AND i.issueid NOT IN (29015, 29017, 44227, 44238, 44239, 29459, 31860)
-ORDER BY i.issueid
+ORDER BY isl.seq, i.issueid
