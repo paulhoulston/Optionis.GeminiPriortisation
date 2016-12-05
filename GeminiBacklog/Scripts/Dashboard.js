@@ -81,6 +81,12 @@
                 });
             }
 
+            function onSearchTermEntered(e) {
+                if ((e.keyCode) === 13) {
+                    searchIssues({ currentTarget: $('#lnkSearchIssues') });
+                }
+            }
+
             function bindFilterStatus(opts) {
                 function filterStatus(e) {
                     var trg = $(e.currentTarget),
@@ -117,7 +123,9 @@
             }).tabs({ activate: getWorkHistoryForUser });
 
             $('#timesheetsTabs').tabs({ activate: getWorkHistoryForUser });
-            $('#lnkSearchIssues').click(searchIssues);
+            $('#lnkSearchIssues').on('click', searchIssues)
+            $('#searchIssues').on('keyup', onSearchTermEntered);
+
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/priorities', selector: '#backlog', template: '#issues-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/devissues', selector: '#devAssigned', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/bautasks', selector: '#bau', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
