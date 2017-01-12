@@ -30,6 +30,7 @@
             <li><a href="#enhancements">Application Enhancements</a></li>
             <li><a href="#timesheetsTabs">Time Logging</a></li>
             <li><a href="#metrics">Metrics</a></li>
+            <li><a href="#kpis">KPIs</a></li>
             <li><a href="#searchIssues">Search Issues</a></li>
         </ul>
         <div id="backlog"></div>
@@ -57,6 +58,7 @@
             </div>
         </div>
         <div id="metrics"></div>
+        <div id="kpis"></div>
         <div id="searchIssues">
             <input id="searchIssues" type="text" placeholder="Enter search term..." />
             <a id="lnkSearchIssues" href="#">Search</a>
@@ -265,6 +267,71 @@
             <div class="column grid_10">{{summary}}</div>
         </div>
         {{/issues}}
+    </script>
+    <script id="kpis-template" type="text/x-handlebars">
+        <h2>Release History</h2>
+        <div class="row">
+            <div class="column grid_2 strong">&nbsp;</div>
+            <div class="column grid_2 strong alignCenter">Pending</div>
+            <div class="column grid_2 strong alignCenter">Success</div>
+            <div class="column grid_2 strong alignCenter">Failed</div>
+            <div class="column grid_2 strong alignCenter">Aborted</div>
+        </div>
+        {{#releases}}
+        <div class="row">
+            <div class="column grid_2 alignRight">{{month}}</div>
+            <div class="column grid_2 alignCenter">{{pending}}</div>
+            <div class="column grid_2 alignCenter">{{success}}</div>
+            <div class="column grid_2 alignCenter">{{failed}}</div>
+            <div class="column grid_2 alignCenter">{{aborted}}</div>
+        </div>
+        {{/releases}}
+        <br />
+        <h2>Time Logged BAU verus Enhancements</h2>
+        <div class="row">
+            <div class="column grid_2 strong">&nbsp;</div>
+            <div class="column grid_3 strong alignCenter">BAU</div>
+            <div class="column grid_3 strong alignCenter">Enhancements</div>
+        </div>
+        {{#loggedTime}}
+        <div class="row">
+            <div class="column grid_2 alignRight">{{month}}</div>
+            <div class="column grid_3 alignCenter">{{bau.time.hours}}h {{bau.time.minutes}}m ({{bau.percentage}}%)</div>
+            <div class="column grid_3 alignCenter">{{enhancements.time.hours}}h {{enhancements.time.minutes}}m ({{enhancements.percentage}}%)</div>
+        </div>
+        {{/loggedTime}}
+        <br />
+        <h2>Issue Throughput - BAU</h2>
+        <div class="row">
+            <div class="column grid_2 strong">&nbsp;</div>
+            <div class="column grid_3 strong alignCenter">Created in Month</div>
+            <div class="column grid_3 strong alignCenter">Closed in Month</div>
+            <div class="column grid_3 strong alignCenter">Open at Start of Month</div>
+        </div>
+        {{#issueThroughput.bau}}
+        <div class="row">
+            <div class="column grid_2 alignRight">{{month}}</div>
+            <div class="column grid_3 alignCenter">{{createdInMonth}}</div>
+            <div class="column grid_3 alignCenter">{{closedInMonth}}</div>
+            <div class="column grid_3 alignCenter">{{openIssuesAtMonthStart}}</div>
+        </div>
+        {{/issueThroughput.bau}}
+        <br />
+        <h2>Issue Throughput - Enhancements</h2>
+        <div class="row">
+            <div class="column grid_2 strong">&nbsp;</div>
+            <div class="column grid_3 strong alignCenter">Created in Month</div>
+            <div class="column grid_3 strong alignCenter">Closed in Month</div>
+            <div class="column grid_3 strong alignCenter">Open at Start of Month</div>
+        </div>
+        {{#issueThroughput.enhancements}}
+        <div class="row">
+            <div class="column grid_2 alignRight">{{month}}</div>
+            <div class="column grid_3 alignCenter">{{createdInMonth}}</div>
+            <div class="column grid_3 alignCenter">{{closedInMonth}}</div>
+            <div class="column grid_3 alignCenter">{{openIssuesAtMonthStart}}</div>
+        </div>
+        {{/issueThroughput.enhancements}}
     </script>
 </body>
 </html>

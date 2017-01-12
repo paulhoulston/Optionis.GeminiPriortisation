@@ -14,7 +14,7 @@ namespace GeminiBacklog.Controllers
 
         readonly DBWrapper _dbWrapper = new DBWrapper();
 
-        [Route("kpis/releases/{startMonth}/{monthsToView}")]
+        [Route("kpis/{startMonth}/{monthsToView}")]
         public dynamic Get(DateTime startMonth, int monthsToView)
         {
             var param = new { StartMonth = startMonth, MonthsToView = monthsToView };
@@ -33,15 +33,30 @@ namespace GeminiBacklog.Controllers
                 .Exec<LoggedTime>(TIME_LOGGED_SQL, param)
                 .Select(i => new
                 {
-                    i.Month,
-                    bauMinutes = i.LoggedTimeForBAU,
-                    enhancementsMinutes = i.LoggedTimeForEnhancements
+                    Month = i.Month.ToString("MMM-yyyy"),
+                    bau = new
+                    {
+                        time = new Total(i.LoggedTimeForBAU),
+                        percentage = (100 * i.LoggedTimeForBAU / (float)(i.LoggedTimeForBAU + i.LoggedTimeForEnhancements)).ToString("N2")
+                    },
+                    enhancements = new
+                    {
+                        time = new Total(i.LoggedTimeForEnhancements),
+                        percentage = (100 * i.LoggedTimeForEnhancements / (float)(i.LoggedTimeForBAU + i.LoggedTimeForEnhancements)).ToString("N2")
+                    }
                 });
         }
 
-        IEnumerable<Releases> GetReleases(object param)
+        dynamic GetReleases(object param)
         {
-            return _dbWrapper.Exec<Releases>(RELEASES_SQL, param);
+            return _dbWrapper.Exec<Releases>(RELEASES_SQL, param).Select(i => new
+            {
+                Month = i.Month.ToString("MMM-yyyy"),
+                i.Pending,
+                i.Success,
+                i.Failed,
+                i.Aborted
+            });
         }
 
         dynamic GetIssueThroughput(object param)
@@ -56,7 +71,13 @@ namespace GeminiBacklog.Controllers
 
         static dynamic Filter(IEnumerable<IssueThroughput> items, string issueType)
         {
-            return items.Where(i => i.IssueType.Equals(issueType)).Select(i => new { i.Month, i.CreatedInMonth, i.ClosedInMonth, i.OpenIssuesAtMonthStart });
+            return items.Where(i => i.IssueType.Equals(issueType)).Select(i => new
+            {
+                Month = i.Month.ToString("MMM-yyyy"),
+                i.CreatedInMonth,
+                i.ClosedInMonth,
+                i.OpenIssuesAtMonthStart
+            });
         }
 
         class LoggedTime

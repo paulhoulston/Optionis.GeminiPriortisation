@@ -27,7 +27,10 @@
 
     init: function () {
 
-        var sitePath;
+        var sitePath,
+            now = new Date(),
+            firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1),
+            kpisUri = Dashboard.formatString('{0}/kpis/{1}-{2}-01/12', '{0}', firstOfMonth.getFullYear(), (firstOfMonth.getMonth() + 1));
 
         function getWorkHistoryForUser() {
             var tabIndex = $('#timesheetsTabs').tabs('option', 'active'),
@@ -132,6 +135,7 @@
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/applicationenhancements', selector: '#enhancements', template: '#enhancements-template', sitePath: sitePath, onComplete: bindFilterStatus });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/permissibledates', selector: '#dates', template: '#availabledates-template', sitePath: sitePath, onComplete: onPermissableDatesBound });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath, onComplete: onMetricsBound });
+            Dashboard.bindToTemplateWithUrl({ uri: kpisUri, selector: '#kpis', template: '#kpis-template', sitePath: sitePath });
         }
 
         function getPath() {
