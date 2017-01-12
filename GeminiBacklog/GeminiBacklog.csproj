@@ -126,6 +126,7 @@
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\DevAssignedTasksController.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
+    <Compile Include="Controllers\KpisController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\SearchIssuesController.cs" />
     <Compile Include="Models\WorkBreakDown.cs" />

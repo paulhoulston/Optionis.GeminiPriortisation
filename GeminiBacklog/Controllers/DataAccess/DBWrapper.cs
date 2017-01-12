@@ -17,6 +17,13 @@ namespace GeminiBacklog.Controllers.DataAccess
             return results;
         }
 
+        public IEnumerable<T> Exec<T>(string sql, object param = null) where T : class
+        {
+            IEnumerable<T> results = null;
+            Query(sqlConnection => results = sqlConnection.Query<T>(sql, param, commandType: System.Data.CommandType.StoredProcedure));
+            return results;
+        }
+
         public T Single<T>(string sql, object param = null) where T : class
         {
             T result = null;
