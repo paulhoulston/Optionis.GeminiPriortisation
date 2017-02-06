@@ -74,28 +74,33 @@
         </select>
     </script>
     <script id="issues-template" type="text/x-handlebars-template">
-        <div class="row">
-            <div class="column grid_1 strong">Issue</div>
-            <div class="column grid_4 strong">Summary</div>
-            <div class="column grid_2 strong">Status</div>
-            <div class="column grid_1 strong">Type</div>
-            <div class="column grid_1 strong">DueDate</div>
-            <div class="column grid_1 strong">Created</div>
-            <div class="column grid_1 strong">Priority</div>
-        </div>
-        {{#issues}}
-        <div class="row bordered">
-            <div class="column grid_1">
-                <a target="_blank" href="{{geminiUri}}">{{issue}}</a>
+        {{#if issues.length}}
+            <div class="row">
+                <div class="column grid_1 strong">Issue</div>
+                <div class="column grid_4 strong">Summary</div>
+                <div class="column grid_2 strong">Status</div>
+                <div class="column grid_1 strong">Type</div>
+                <div class="column grid_1 strong">DueDate</div>
+                <div class="column grid_1 strong">Created</div>
+                <div class="column grid_1 strong">Priority</div>
             </div>
-            <div class="column grid_4">{{summary}}</div>
-            <div class="column grid_2">{{status}}</div>
-            <div class="column grid_1">{{type}}</div>
-            <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
-            <div class="column grid_1">{{formatDate created}}</div>
-            <div class="column grid_1">{{priority}}</div>
-        </div>
-        {{/issues}}
+            {{#issues}}
+            <div class="row bordered">
+                <div class="column grid_1">
+                    <a target="_blank" href="{{geminiUri}}">{{issue}}</a>
+                </div>
+                <div class="column grid_4">{{summary}}</div>
+                <div class="column grid_2">{{status}}</div>
+                <div class="column grid_1">{{type}}</div>
+                <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
+                <div class="column grid_1">{{formatDate created}}</div>
+                <div class="column grid_1">{{priority}}</div>
+            </div>
+            {{/issues}}
+        {{else}}
+            <p>Sorry, we're too <b>awesome</b> and all the dev tasks are all done :-(</p>
+        {{/if}}
+
     </script>
     <script id="weekly-breakdown-template" type="text/x-handlebars-template">
         <div class="row">
