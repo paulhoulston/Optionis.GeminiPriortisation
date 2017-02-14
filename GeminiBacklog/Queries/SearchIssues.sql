@@ -35,4 +35,4 @@ WHERE i.issueid IN (
 		FROM dbo.issuecomments
 		WHERE comment LIKE '%' + @searchTerm + '%'
 		)
-
+ORDER BY i.issueid DESC
