@@ -17,6 +17,21 @@ namespace GeminiBacklog.Controllers.DataAccess
             return results;
         }
 
+        public Tuple<IEnumerable<T>, IEnumerable<TU>> Query<T, TU>(string sql, object param = null)
+            where T : class
+            where TU : class
+        {
+            Tuple<IEnumerable<T>, IEnumerable<TU>> results = null;
+            Query(sqlConnection =>
+            {
+                var multi = sqlConnection.QueryMultiple(sql, param);
+                var result1 = multi.Read<T>();
+                var result2 = multi.Read<TU>();
+                results = new Tuple<IEnumerable<T>, IEnumerable<TU>>(result1, result2);
+            });
+            return results;
+        }
+
         public IEnumerable<T> Exec<T>(string sql, object param = null) where T : class
         {
             IEnumerable<T> results = null;

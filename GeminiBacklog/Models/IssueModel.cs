@@ -18,5 +18,4 @@ namespace GeminiBacklog.Models
         public string Project { get; set; }
         public string GeminiUri { get { return string.Format(_viewIssueUri, IssueId, Project); } }
     }
-
 }

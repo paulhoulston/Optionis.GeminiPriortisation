@@ -102,6 +102,7 @@
     <EmbeddedResource Include="Queries\GetUsers.sql" />
     <EmbeddedResource Include="Queries\SearchIssues.sql" />
     <EmbeddedResource Include="Queries\DevAssigned.sql" />
+    <EmbeddedResource Include="Queries\DeploymentHistory.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
@@ -125,10 +126,12 @@
     <Compile Include="Controllers\DataAccess\DBWrapper.cs" />
     <Compile Include="Controllers\DataAccess\SqlQueries.cs" />
     <Compile Include="Controllers\DevAssignedTasksController.cs" />
+    <Compile Include="Controllers\GetDeploymentHistoryController.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
     <Compile Include="Controllers\KpisController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\SearchIssuesController.cs" />
+    <Compile Include="Models\Deployment.cs" />
     <Compile Include="Models\WorkBreakDown.cs" />
     <Compile Include="Models\Total.cs" />
     <Compile Include="Controllers\WeeklyWorkBreakDownController.cs" />
