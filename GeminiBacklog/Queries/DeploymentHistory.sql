@@ -21,6 +21,7 @@ SELECT d.deploymentid AS DeploymentId
 			THEN 'CR-'
 		ELSE 'PROB'
 		END + cast(i.issueid AS VARCHAR(10)) AS IssueDescription
+    ,i.summary AS Summary
 FROM [kpi].[deployments] d
 JOIN kpi.releaseissues ri ON ri.releaseid = d.releaseid
 JOIN issues i ON i.issueid = ri.issueid

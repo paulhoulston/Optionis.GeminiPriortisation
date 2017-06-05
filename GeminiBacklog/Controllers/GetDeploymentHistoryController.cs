@@ -29,7 +29,8 @@ namespace GeminiBacklog.Controllers
                     Issues = deployments.Item2.Where(issue => issue.DeploymentId == deployment.DeploymentId).Select(issue => new Issue
                     {
                       GeminiUri=issue.GeminiUri,
-                      IssueDescription=issue.IssueDescription
+                      IssueDescription=issue.IssueDescription,
+                      Summary = issue.Summary
                     })
                 });
             }
@@ -55,6 +56,7 @@ namespace GeminiBacklog.Controllers
         class Issue
         {
             public string IssueDescription { get; set; }
+            public string Summary { get; set; }
             public string GeminiUri { get; set; }
         }
     }

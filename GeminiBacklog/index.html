@@ -357,11 +357,23 @@
             <div class="column grid_2">{{deployedBy}}</div>
             <div class="column grid_1">{{deploymentStatus}}</div>
             <div class="column grid_4">
-                <ul>
+                {{#issues}}
+                <div class="row">
+                    <div class="column grid_2 alignLeft">
+                        <a href="{{geminiUri}}">{{issueDescription}}</a>
+                    </div>
+                    <div class="column grid_10 alignLeft">
+                        {{summary}}
+                    </div>
+                </div>
+                {{/issues}}
+                <!--<ul>
                     {{#issues}}
-                        <li><a href="{{geminiUri}}">{{issueDescription}}</a></li>
+                    <li>
+                        <a href="{{geminiUri}}">{{issueDescription}}</a> {{summary}}
+                    </li>
                     {{/issues}}
-                </ul>
+                </ul>-->
             </div>
         </div>
         {{/deployments}}
