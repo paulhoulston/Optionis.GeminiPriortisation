@@ -31,6 +31,7 @@
             <li><a href="#timesheetsTabs">Time Logging</a></li>
             <li><a href="#metrics">Metrics</a></li>
             <li><a href="#kpis">KPIs</a></li>
+            <li><a href="#deployments">Deployments</a></li>
             <li><a href="#searchIssues">Search Issues</a></li>
         </ul>
         <div id="backlog"></div>
@@ -59,6 +60,7 @@
         </div>
         <div id="metrics"></div>
         <div id="kpis"></div>
+        <div id="deployments"></div>
         <div id="searchIssues">
             <input id="searchIssues" type="text" placeholder="Enter search term..." />
             <a id="lnkSearchIssues" href="#">Search</a>
@@ -75,30 +77,30 @@
     </script>
     <script id="issues-template" type="text/x-handlebars-template">
         {{#if issues.length}}
-            <div class="row">
-                <div class="column grid_1 strong">Issue</div>
-                <div class="column grid_4 strong">Summary</div>
-                <div class="column grid_2 strong">Status</div>
-                <div class="column grid_1 strong">Type</div>
-                <div class="column grid_1 strong">DueDate</div>
-                <div class="column grid_1 strong">Created</div>
-                <div class="column grid_1 strong">Priority</div>
+        <div class="row">
+            <div class="column grid_1 strong">Issue</div>
+            <div class="column grid_4 strong">Summary</div>
+            <div class="column grid_2 strong">Status</div>
+            <div class="column grid_1 strong">Type</div>
+            <div class="column grid_1 strong">DueDate</div>
+            <div class="column grid_1 strong">Created</div>
+            <div class="column grid_1 strong">Priority</div>
+        </div>
+        {{#issues}}
+        <div class="row bordered">
+            <div class="column grid_1">
+                <a target="_blank" href="{{geminiUri}}">{{issue}}</a>
             </div>
-            {{#issues}}
-            <div class="row bordered">
-                <div class="column grid_1">
-                    <a target="_blank" href="{{geminiUri}}">{{issue}}</a>
-                </div>
-                <div class="column grid_4">{{summary}}</div>
-                <div class="column grid_2">{{status}}</div>
-                <div class="column grid_1">{{type}}</div>
-                <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
-                <div class="column grid_1">{{formatDate created}}</div>
-                <div class="column grid_1">{{priority}}</div>
-            </div>
-            {{/issues}}
+            <div class="column grid_4">{{summary}}</div>
+            <div class="column grid_2">{{status}}</div>
+            <div class="column grid_1">{{type}}</div>
+            <div class="column grid_1">{{#if dueDate}} {{formatDate dueDate}} {{else}}&nbsp;{{/if}}</div>
+            <div class="column grid_1">{{formatDate created}}</div>
+            <div class="column grid_1">{{priority}}</div>
+        </div>
+        {{/issues}}
         {{else}}
-            <p>Sorry, we're too <b>awesome</b> and all the dev tasks are all done :-(</p>
+        <p>Sorry, we're too <b>awesome</b> and all the dev tasks are all done :-(</p>
         {{/if}}
 
     </script>
@@ -337,6 +339,32 @@
             <div class="column grid_1 alignCenter">{{openIssuesAtMonthStart}}</div>
         </div>
         {{/issueThroughput.enhancements}}
+    </script>
+    <script id="deployments-template" type="text/x-handlebars">
+        <div class="row">
+            <div class="column grid_1 strong">&nbsp;</div>
+            <div class="column grid_2 strong">Title</div>
+            <div class="column grid_2 strong">Application</div>
+            <div class="column grid_2 strong">Deployed By</div>
+            <div class="column grid_1 strong">Status</div>
+            <div class="column grid_4 strong">Issues</div>
+        </div>
+        {{#deployments}}
+        <div class="row bordered">
+            <div class="column grid_1">{{deploymentDate}}</div>
+            <div class="column grid_2">{{releaseTitle}}</div>
+            <div class="column grid_2">{{application}}</div>
+            <div class="column grid_2">{{deployedBy}}</div>
+            <div class="column grid_1">{{deploymentStatus}}</div>
+            <div class="column grid_4">
+                <ul>
+                    {{#issues}}
+                        <li><a href="{{geminiUri}}">{{issueDescription}}</a></li>
+                    {{/issues}}
+                </ul>
+            </div>
+        </div>
+        {{/deployments}}
     </script>
 </body>
 </html>
