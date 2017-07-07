@@ -48,11 +48,24 @@ namespace GeminiBacklog.Controllers.DataAccess
 
         void Query(Action<SqlConnection> sqlMethod)
         {
-            using (var sqlConnection = new SqlConnection(_connectionString))
+            try
             {
-                sqlConnection.Open();
-                sqlMethod(sqlConnection);
-                sqlConnection.Close();
+                using (var sqlConnection = new SqlConnection(_connectionString))
+                {
+                    sqlConnection.Open();
+                    sqlMethod(sqlConnection);
+                    sqlConnection.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                var inner = ex;
+                while (inner != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(inner.Message);
+                    inner = inner.InnerException;
+                }
+                throw;
             }
         }
     }
