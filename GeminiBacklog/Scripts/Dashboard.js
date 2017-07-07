@@ -137,6 +137,7 @@
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/metrics', selector: '#metrics', template: '#metrics-template', sitePath: sitePath, onComplete: onMetricsBound });
             Dashboard.bindToTemplateWithUrl({ uri: kpisUri, selector: '#kpis', template: '#kpis-template', sitePath: sitePath });
             Dashboard.bindToTemplateWithUrl({ uri: '{0}/deployments', selector: '#deployments', template: '#deployments-template', sitePath: sitePath });
+            Dashboard.bindToTemplateWithUrl({ uri: '{0}/uatitems', selector: '#uat', template: '#issues-template', sitePath: sitePath, onComplete: bindFilterStatus });
         }
 
         function getPath() {

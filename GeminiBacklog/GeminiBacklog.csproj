@@ -103,6 +103,7 @@
     <EmbeddedResource Include="Queries\SearchIssues.sql" />
     <EmbeddedResource Include="Queries\DevAssigned.sql" />
     <EmbeddedResource Include="Queries\DeploymentHistory.sql" />
+    <EmbeddedResource Include="Queries\ItemsInUAT.sql" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
     <Content Include="Scripts\handlebars.js" />
@@ -128,6 +129,7 @@
     <Compile Include="Controllers\DevAssignedTasksController.cs" />
     <Compile Include="Controllers\GetDeploymentHistoryController.cs" />
     <Compile Include="Controllers\GetIssues.cs" />
+    <Compile Include="Controllers\UatItemsController.cs" />
     <Compile Include="Controllers\KpisController.cs" />
     <Compile Include="Controllers\MetricsController.cs" />
     <Compile Include="Controllers\SearchIssuesController.cs" />
