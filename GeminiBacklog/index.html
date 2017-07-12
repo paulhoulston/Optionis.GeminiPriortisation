@@ -29,8 +29,6 @@
             <li><a href="#bau">BAU Tasks</a></li>
             <li><a href="#enhancements">Application Enhancements</a></li>
             <li><a href="#timesheetsTabs">Time Logging</a></li>
-            <!--<li><a href="#metrics">Metrics</a></li>-->
-            <!--<li><a href="#kpis">KPIs</a></li>-->
             <li><a href="#uat">UAT</a></li>
             <li><a href="#deployments">Deployments</a></li>
             <li><a href="#searchIssues">Search Issues</a></li>
@@ -59,8 +57,6 @@
                 </div>
             </div>
         </div>
-        <!--<div id="metrics"></div>-->
-        <!--<div id="kpis"></div>-->
         <div id="uat"></div>
         <div id="deployments"></div>
         <div id="searchIssues">
@@ -362,20 +358,13 @@
                 {{#issues}}
                 <div class="row">
                     <div class="column grid_2 alignLeft">
-                        <a href="{{geminiUri}}">{{issueDescription}}</a>
+                        <a target="_blank" href="{{geminiUri}}">{{issueDescription}}</a>
                     </div>
                     <div class="column grid_10 alignLeft">
                         {{summary}}
                     </div>
                 </div>
                 {{/issues}}
-                <!--<ul>
-                    {{#issues}}
-                    <li>
-                        <a href="{{geminiUri}}">{{issueDescription}}</a> {{summary}}
-                    </li>
-                    {{/issues}}
-                </ul>-->
             </div>
         </div>
         {{/deployments}}
